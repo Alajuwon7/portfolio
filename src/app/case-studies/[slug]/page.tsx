@@ -86,6 +86,29 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     ],
   };
 
+  const problemSolutionPairs = [
+    {
+      problem: "7+ nested sidebar sections with no clear starting point",
+      solution: "4 role-based entry points on the home screen",
+    },
+    {
+      problem: "Leadership transitions = lost context on progress",
+      solution: "Prominent contact cards + status headers per jurisdiction",
+    },
+    {
+      problem: "Can't distinguish blocker types for outreach",
+      solution: "Structured blocker-type tagging + priority levels",
+    },
+    {
+      problem: "Data scattered across PowerApps, Excel, email",
+      solution: "Single dashboard with real-time metrics + funnel",
+    },
+    {
+      problem: "Briefing leadership took 11+ minutes of prep",
+      solution: "Click-to-drill metrics with trend indicators",
+    },
+  ];
+
   return (
     <main className={styles.caseStudyPage}>
       <div className={styles.container}>
@@ -164,6 +187,29 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 {study.problem.context.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
+              </div>
+
+              <div className={styles.problemDiagram} aria-label="Problems and solutions overview">
+                <div className={styles.problemDiagramHeader}>
+                  <span>Problems</span>
+                  <span>Solutions</span>
+                </div>
+
+                <div className={styles.diagramGrid}>
+                  {problemSolutionPairs.map((item) => (
+                    <div key={item.problem} className={styles.diagramRow}>
+                      <div className={`${styles.diagramCard} ${styles.diagramProblem}`}>
+                        <p>{item.problem}</p>
+                      </div>
+                      <div className={styles.diagramArrow} aria-hidden="true">
+                        <span>→</span>
+                      </div>
+                      <div className={`${styles.diagramCard} ${styles.diagramSolution}`}>
+                        <p>{item.solution}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

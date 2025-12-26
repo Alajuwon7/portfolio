@@ -61,3 +61,9 @@ input {
 section {
   width: 100%;
 }
+
+/* Ensure Next.js dev portal isn't offset */
+nextjs-portal {
+  left: auto !important;
+  top: auto !important;
+}

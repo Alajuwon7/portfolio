@@ -6,7 +6,7 @@ import { useCallback, useState } from "react";
 import styles from "./page.module.css";
 
 const heroPortrait =
-  "https://www.figma.com/api/mcp/asset/33544346-3992-4367-a333-988d5c411d5a";
+  "https://res.cloudinary.com/kingaat7/image/upload/v1764236243/Alajuwon3Geminiimage_or6odc.png";
 const heroScreen =
   "https://res.cloudinary.com/kingaat7/image/upload/v1764239406/Canstudy_Posts_hzgm1j.png";
 const aboutPortrait =
@@ -250,14 +250,6 @@ export default function Home() {
 
           <div className={styles.heroVisual}>
             <div className={styles.heroImageFrame}>
-              <Image
-                src={heroPortrait}
-                alt=""
-                className={styles.heroPortrait}
-                loading="lazy"
-                width={600}
-                height={680}
-              />
               <Image
                 src={heroScreen}
                 alt="Case study preview"

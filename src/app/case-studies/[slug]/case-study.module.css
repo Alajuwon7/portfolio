@@ -344,6 +344,81 @@
   line-height: 1.6;
 }
 
+.problemDiagram {
+  margin-top: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25);
+}
+
+.problemDiagramHeader {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0 0.35rem;
+}
+
+.diagramGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.diagramRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.diagramCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.1rem;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.5;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.diagramCard p {
+  margin: 0;
+}
+
+.diagramProblem {
+  border-left: 4px solid rgba(255, 255, 255, 0.25);
+}
+
+.diagramSolution {
+  border-left: 4px solid var(--color-primary);
+  background: linear-gradient(
+    135deg,
+    rgba(253, 133, 58, 0.18),
+    rgba(253, 133, 58, 0.08)
+  );
+}
+
+.diagramArrow {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 1.25rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
 .problemQuote {
   background: rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-lg);
@@ -1340,6 +1415,19 @@
   .problemSection {
     padding: 1.5rem;
     border-radius: var(--radius-lg);
+  }
+
+  .problemDiagramHeader {
+    grid-template-columns: 1fr;
+    row-gap: 0.25rem;
+  }
+
+  .diagramRow {
+    grid-template-columns: 1fr;
+  }
+
+  .diagramArrow {
+    justify-self: flex-start;
   }
 
   .processTimeline {
