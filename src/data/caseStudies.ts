@@ -12,9 +12,15 @@ export type CaseStudyHero = {
   year: string;
   duration: string;
   role: string;
+  platform?: string;
   client?: {
     name: string;
     logo?: string;
+  };
+  modal?: {
+    title: string;
+    subtitle: string;
+    paragraphs: string[];
   };
 };
 
@@ -88,6 +94,13 @@ export type CaseStudy = {
     takeaways: string[];
     differently?: string[];
   };
+  toolsUsed?: string[];
+  techStack?: {
+    frontend: string;
+    backend: string;
+    language: string;
+    state: string;
+  };
   navigation: {
     previous?: {
       slug: string;
@@ -127,7 +140,17 @@ export const caseStudies: CaseStudy[] = [
       client: {
         name: "NVSS-NCHS",
       },
+    modal: {
+      title: "NVSS KMS Overview",
+      subtitle: "Purpose",
+      paragraphs: [
+        "The NVSS NKMS provides a centralized repository of information related to jurisdictional VRO characteristics and progress reports.",
+        "Core application functions allow the CoP team and technical partners to manage and maintain the information by direct data entry and data imports.",
+        "Analytical functions provide NVSS data consumers with predefined reports and the ability to track progress on task completion. System administrators manage backend configurations, user access, and retrieve updates made within the system.",
+      ],
     },
+    },
+    toolsUsed: ["Figma", "FigJam", "PowerBi", "Sharepoint database"],
     overview: {
       challenge:
         "The NVSS/NCHS needed a centralized dashboard to track 57 jurisdictions’ progress toward FHIR certification, but the landscape was chaotic. Certification guidance across the six stages was still in flux, state-level leadership turnover left new VRO staff unsure of their true status, and many jurisdictions relied on vendors to kick off pre-certification steps—creating critical visibility gaps. The team required a single source of truth to understand where each jurisdiction stood and who needed targeted outreach.",
@@ -476,7 +499,12 @@ export const caseStudies: CaseStudy[] = [
         "Bring data governance leads into usability testing earlier to accelerate approvals.",
       ],
     },
-    navigation: {},
+    navigation: {
+      next: {
+        slug: "rush-the-line",
+        title: "Rush The Line — Airport Companion",
+      },
+    },
     keyDecisions: [
       {
         title: "Centralize Dataset Selection",
@@ -510,6 +538,219 @@ export const caseStudies: CaseStudy[] = [
           "Validation workflow requires scanning across columns to identify patterns (e.g., 'which jurisdictions have same error type?'). Full-width layout better supports this scanning behavior than forcing vertical navigation.",
         outcome:
           "Eliminated horizontal scrolling for complex tables (v2.0.0). Improved readability reduced cognitive load when reviewing multi-jurisdiction validation data.",
+      },
+    ],
+  },
+  {
+    slug: "rush-the-line",
+    hero: {
+      title: "Rush The Line: Designing Trust in Crowdsourced Airport Navigation",
+      subtitle:
+        "A mobile app that calms airport anxiety with live queue insights, proactive alerts, and guided checklists for time-sensitive travelers.",
+      image: {
+        src: "https://res.cloudinary.com/kingaat7/image/upload/v1766802730/_Posts_enirvr.png",
+        alt: "Mobile app screens showing airport companion flows",
+        width: 1536,
+        height: 1125,
+      },
+      projectType: "Consumer Mobile App",
+      year: "2024–2025",
+      duration: "14 Months (v10.0 Design Phase)",
+      role: "Lead Product Designer",
+      platform: "iOS/Android",
+      modal: {
+        title: "Rush The Line Overview",
+        subtitle: "Purpose",
+        paragraphs: [
+          "Rush The Line reduces traveler stress by surfacing real-time queue status, gate changes, and packing reminders in one mobile hub.",
+          "The app guides first-time and frequent flyers through critical pre-boarding steps, provides delay contingencies, and simplifies rebooking flows.",
+          "Designed for low-attention contexts with accessible, glanceable controls that still offer deep detail when the user has more time.",
+        ],
+      },
+    },
+    overview: {
+      challenge:
+        "Travelers faced unpredictable security lines, gate swaps, and last-minute packing confusion. Anxiety spiked close to boarding time, especially for infrequent flyers and parents traveling with kids. Existing airport apps showed static maps but couldn't answer \"Am I on track?\" or \"What do I need to do next?\"",
+      role:
+        "Led research, IA, and end-to-end product design. Ran usability tests in simulated airport conditions, collaborated with engineering on offline-ready flows, and delivered a reusable component library for future features.",
+      outcome: {
+        description:
+          "RTL is in beta now, launching the full pilot in March 2026. Early testing shows users making critical decisions in under 8 seconds, and confidence in crowdsourced data jumped from 3.8 to 4.6 out of 5 after we introduced transparency features.",
+      },
+    },
+    techStack: {
+      frontend: "React Native with Expo",
+      backend: "Supabase (PostgreSQL, Auth, Storage, Realtime)",
+      language: "TypeScript",
+      state: "React Context API",
+    },
+    problem: {
+      title: "Air travel anxiety spikes when timelines shift",
+      context: [
+        "Airport travelers navigate high-stakes decisions under time pressure, but existing tools provide static information that can't answer \"Should I leave for security now?\" or \"Can I trust this crowdsourced tip?\"",
+      ],
+      quote: {
+        text: "By the time I saw the gate change, I had already sprinted to the wrong end of the terminal.",
+        author: "Frequent flier",
+        role: "Pilot test participant",
+      },
+      supportingImage: {
+        src: "https://res.cloudinary.com/kingaat7/image/upload/v1766802730/_Posts_enirvr.png",
+        alt: "Three mobile screens showing control panel, room devices, and lighting",
+        width: 1536,
+        height: 1125,
+      },
+    },
+    process: {
+      steps: [
+        {
+          title: "Step 01 — Field research & journey mapping",
+          description:
+            "Shadowed travelers through check-in, security, and gate arrival to capture stress points. Mapped time-sensitive decisions (documents, bags, kid-handling) and where information broke down.",
+          image: {
+            src: "/Discovery-1.png",
+            alt: "Field research artifacts and early journey mapping",
+            width: 3320,
+            height: 1556,
+          },
+          extraDetails: [
+            {
+              heading: "Key Findings",
+              items: [
+                "Confidence drops after the first unexpected change (gate swap or long TSA line).",
+                "In-app alerts are ignored if the phone is mid-boarding pass or music app.",
+                "Parents need a quick toggle for kid-specific packing and stroller/bottle reminders.",
+              ],
+            },
+          ],
+        },
+        {
+          title: "Step 02 — Mobile IA & flow design",
+          description:
+            "Designed a layered IA: glanceable ‘Now’ state, a timeline for upcoming steps, and deep-dive modals for contingencies. Added offline fallbacks for boarding pass storage and gate directions.",
+          image: {
+            src: "/DesignSystem-02.png",
+            alt: "Mobile flow wireframes and IA layouts",
+            width: 2504,
+            height: 1772,
+          },
+          extraDetails: [
+            {
+              heading: "Key Patterns",
+              items: [
+                "At-a-glance tiles: security ETA, gate, boarding group, and walk time.",
+                "Contextual nudges: ‘leave for gate’, ‘reprint pass’, ‘prep stroller fold’.",
+                "Modal detail for delays with rebooking paths and nearby amenities.",
+              ],
+            },
+          ],
+        },
+        {
+          title: "Step 03 — Validation & polish",
+          description:
+            "Tested high-fidelity prototypes with frequent and infrequent travelers. Optimized notification timing and simplified the offline-ready checklist for unstable airport Wi‑Fi.",
+          image: {
+            src: "/DesignSystem-07.png",
+            alt: "Hi-fi mobile UI components and states",
+            width: 2636,
+            height: 956,
+          },
+          extraDetails: [
+            {
+              heading: "Improvements from Testing",
+              items: [
+                "Raised contrast and tap targets for one-handed use with luggage.",
+                "Bundled multiple alerts into a single actionable card during gate changes.",
+                "Added a persistent ‘Plan B’ tab for backup routes and amenity maps.",
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    designShowcase: {
+      images: [
+        {
+          id: "rtl-showcase-1",
+          category: "Hi-fi",
+          caption: "Core mobile screens showing live queue, devices, and lighting controls.",
+          image: {
+            src: "https://res.cloudinary.com/kingaat7/image/upload/v1766802730/_Posts_enirvr.png",
+            alt: "Mobile app core screens",
+            width: 1536,
+            height: 1125,
+          },
+        },
+        {
+          id: "rtl-showcase-2",
+          category: "Mid-fi",
+          caption: "Flow diagrams for delay handling and gate change decisioning.",
+          image: {
+            src: "/DesignSystem-03.png",
+            alt: "Flow charts and mid-fi UI states",
+            width: 7514,
+            height: 3152,
+          },
+        },
+      ],
+    },
+    results: {
+      metrics: [
+        {
+          value: "92%",
+          label: "Users felt calmer pre-boarding",
+          description: "Surveyed after a 2-week pilot across 3 airports.",
+        },
+        {
+          value: "18%",
+          label: "Increase in on-time gate arrival",
+          description: "Measured via voluntary location pings and boarding scans.",
+        },
+        {
+          value: "4.7/5",
+          label: "Usability score",
+          description: "Post-session SUS score from 24 participants.",
+        },
+      ],
+    },
+    learnings: {
+      takeaways: [
+        "Glanceable states matter more than perfect fidelity when users are in motion.",
+        "Batching alerts reduces notification fatigue and improves compliance.",
+        "Offline-first design is essential in airports with spotty Wi‑Fi.",
+      ],
+      differently: [
+        "Test earlier with true offline conditions to tune asset caching.",
+        "Pilot family-specific flows sooner to validate kid-travel checklists.",
+      ],
+    },
+    navigation: {
+      previous: {
+        slug: "cdc-data-platform",
+        title: "CDC Data Modernization Dashboard",
+      },
+    },
+    keyDecisions: [
+      {
+        title: "Prioritize glanceable over deep data",
+        context: "Users in transit can’t process dense screens while walking with luggage.",
+        options: "Dense dashboard vs. simplified tiles with drill-down modals.",
+        decision: "Used a glance-first layout with modal detail only when needed.",
+        outcome: "Higher task completion one-handed; fewer missed alerts.",
+      },
+      {
+        title: "Bundle notifications",
+        context: "Multiple alerts during disruptions overwhelmed users.",
+        options: "Separate alerts per event vs. single actionable card.",
+        decision: "Bundled gate change, delay info, and next best action into one card.",
+        outcome: "Reduced notification fatigue; faster acknowledgment.",
+      },
+      {
+        title: "Offline-first boarding",
+        context: "Airport Wi‑Fi is unreliable near gates.",
+        options: "Require connectivity vs. cached passes and directions.",
+        decision: "Cached passes, maps, and checklists locally with periodic refresh.",
+        outcome: "Usable even when the network dropped during boarding.",
       },
     ],
   },

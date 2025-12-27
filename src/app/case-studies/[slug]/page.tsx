@@ -59,6 +59,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     { label: "Year", value: study.hero.year },
     { label: "Duration", value: study.hero.duration },
     { label: "Role", value: study.hero.role },
+    ...(study.hero.platform ? [{ label: "Platform", value: study.hero.platform }] : []),
   ];
 
   const overviewCards: OverviewCard[] = [
@@ -78,36 +79,49 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     },
   ];
 
-  const heroModalContent = {
-    title: "NVSS KMS Overview",
+  const defaultHeroModal = {
+    title: "Project Overview",
     subtitle: "Purpose",
     paragraphs: [
-      "The NVSS NKMS provides a centralized repository of information related to jurisdictional VRO characteristics and progress reports. Core application functions allow the CoP team and technical partners to manage and maintain the information by direct data entry and data imports.Analytical functions provide NVSS data consumers with predefined reports and the ability to track progress on task completion. System administrators manage backend configurations, user access, and retrieve updates made within the system."
+      "This case study highlights the core flows, constraints, and impact of the project. It summarizes how the experience evolved from early research through delivery and validation.",
     ],
   };
 
-  const problemSolutionPairs = [
-    {
-      problem: "7+ nested sidebar sections with no clear starting point",
-      solution: "4 role-based entry points on the home screen",
-    },
-    {
-      problem: "Leadership transitions = lost context on progress",
-      solution: "Prominent contact cards + status headers per jurisdiction",
-    },
-    {
-      problem: "Can't distinguish blocker types for outreach",
-      solution: "Structured blocker-type tagging + priority levels",
-    },
-    {
-      problem: "Data scattered across PowerApps, Excel, email",
-      solution: "Single dashboard with real-time metrics + funnel",
-    },
-    {
-      problem: "Briefing leadership took 11+ minutes of prep",
-      solution: "Click-to-drill metrics with trend indicators",
-    },
-  ];
+  const heroModalContent = study.hero.modal ?? defaultHeroModal;
+
+  const isRushCaseStudy = slug === "rush-the-line";
+
+  const problemSolutionPairs = isRushCaseStudy
+    ? [
+        {
+          problem:
+            'Airport travelers face critical decisions under time pressure but cannot evaluate the trustworthiness of real-time crowdsourced data— a gate change from 45 minutes ago is not as reliable as one from 2 minutes ago, yet most apps do not communicate this difference. When boarding starts in 30 minutes, they need immediate answers like "Am I on track?" but must hunt through fragmented information scattered across airline APIs, TSA systems, and vendor databases that often conflict or go offline. Generic navigation cannot serve diverse needs: wheelchair users need accessible routes, families need nursing rooms, business travelers need lounges, and risk tolerance varies from those who arrive 2 hours early to those who cut it close.',
+          solution:
+            'RTL addresses these challenges through multi-layered transparency: every update displays its data source (crowdsourced vs. official), confidence level (high/medium/low), and color-coded timestamp freshness, with red borders for urgent alerts and purple for moderate priority. A persistent "Decision Cockpit" card answers "Am I on track?" by combining walk time, current wait, and personalized departure recommendations, while a color-coded journey timeline tracks progress through airport stages. Adaptive personalization activates wheelchair-accessible routes, family amenities, or business lounges based on user context, while learning risk tolerance from past behavior to calibrate buffer time recommendations.',
+        },
+      ]
+    : [
+        {
+          problem: "7+ nested sidebar sections with no clear starting point",
+          solution: "4 role-based entry points on the home screen",
+        },
+        {
+          problem: "Leadership transitions = lost context on progress",
+          solution: "Prominent contact cards + status headers per jurisdiction",
+        },
+        {
+          problem: "Can't distinguish blocker types for outreach",
+          solution: "Structured blocker-type tagging + priority levels",
+        },
+        {
+          problem: "Data scattered across PowerApps, Excel, email",
+          solution: "Single dashboard with real-time metrics + funnel",
+        },
+        {
+          problem: "Briefing leadership took 11+ minutes of prep",
+          solution: "Click-to-drill metrics with trend indicators",
+        },
+      ];
 
   return (
     <main className={styles.caseStudyPage}>
@@ -116,12 +130,6 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           <span>↺</span>
           Back to portfolio
         </Link>
-
-        <p className={styles.caseDisclaimer}>
-          ❗ Due to strict federal confidentiality affidavits, several production visuals
-          from the CDC engagement have been redacted. The following overview emphasizes
-          methodology, collaboration, and impact rather than sensitive government data.
-        </p>
 
         <section className={styles.heroSection}>
           <div className={styles.heroContent}>
@@ -137,6 +145,31 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 </div>
               ))}
             </div>
+
+            {study.toolsUsed?.length ? (
+              <div className={styles.heroTools}>
+                <span className={styles.heroToolsLabel}>Tools Used</span>
+                <div className={styles.heroToolPills}>
+                  {study.toolsUsed.map((tool) => (
+                    <span key={tool} className={styles.heroToolPill}>
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+            {study.techStack ? (
+              <div className={styles.heroTools}>
+                <span className={styles.heroToolsLabel}>Tech Stack</span>
+                <div className={styles.heroTechStackList}>
+                  <span><strong>Frontend:</strong> {study.techStack.frontend}</span>
+                  <span><strong>Backend:</strong> {study.techStack.backend}</span>
+                  <span><strong>Language:</strong> {study.techStack.language}</span>
+                  <span><strong>State:</strong> {study.techStack.state}</span>
+                </div>
+              </div>
+            ) : null}
 
             {study.hero.client && (
               <div className={styles.heroClient}>
@@ -218,7 +251,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <section className={styles.processSection}>
           <div className={styles.processHeader}>
             <p>Process &amp; Approach</p>
-            <h2>How we moved from fragmented insights to clear decisions.</h2>
+            <h2>How we moved from crowdsourced chaos to confident decisions.</h2>
           </div>
 
           <div className={styles.processTimeline}>

@@ -13,8 +13,7 @@ const aboutPortrait =
   "https://res.cloudinary.com/kingaat7/image/upload/v1764236243/Alajuwon3Geminiimage_or6odc.png";
 const portfolioVisual =
   "https://www.figma.com/api/mcp/asset/bf91a885-74b5-44b6-824a-32e3de94f60f";
-const highlightImageDark =
-  "https://www.figma.com/api/mcp/asset/6f439524-5942-4833-979a-200bdd197ee3";
+const highlightImageDark = "/UXImage.png";
 
 const topUxSkills = [
   "Product Strategy",
