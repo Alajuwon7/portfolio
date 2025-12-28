@@ -574,6 +574,8 @@ export const caseStudies: CaseStudy[] = [
       role:
         "Led research, IA, and end-to-end product design. Ran usability tests in simulated airport conditions, collaborated with engineering on offline-ready flows, and delivered a reusable component library for future features.",
       outcome: {
+        stat: "3.8→4.6",
+        label: "Confidence lift",
         description:
           "RTL is in beta now, launching the full pilot in March 2026. Early testing shows users making critical decisions in under 8 seconds, and confidence in crowdsourced data jumped from 3.8 to 4.6 out of 5 after we introduced transparency features.",
       },
