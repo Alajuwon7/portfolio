@@ -606,7 +606,7 @@ export const caseStudies: CaseStudy[] = [
         {
           title: "Step 01 — Field research & journey mapping",
           description:
-            "Shadowed travelers through check-in, security, and gate arrival to capture stress points. Mapped time-sensitive decisions (documents, bags, kid-handling) and where information broke down.",
+            "Shadowed travelers through check-in, security, and gate arrival to capture stress points. Mapped time-sensitive decisions (documents, bags, kid-handling) and where information broke down. Applied Jobs-to-be-Done framework to uncover what users truly “hire” an airport app to do: answer “Am I on track?” before anything else. Validated through trust testing that data source transparency builds confidence more than numeric scores.",
           image: {
             src: "/Discovery-1.png",
             alt: "Field research artifacts and early journey mapping",
@@ -615,19 +615,18 @@ export const caseStudies: CaseStudy[] = [
           },
           extraDetails: [
             {
-              heading: "Key Findings",
+              heading: "Key JTBD Insight",
               items: [
-                "Confidence drops after the first unexpected change (gate swap or long TSA line).",
-                "In-app alerts are ignored if the phone is mid-boarding pass or music app.",
-                "Parents need a quick toggle for kid-specific packing and stroller/bottle reminders.",
+                'When travelers open RTL, they are "hiring" it to answer binary questions: "Am I on track to my gate?" and "What do I need to do next?"',
+                "Secondary needs (dining, shopping, lounges) only emerge after the primary anxiety is resolved.",
               ],
             },
           ],
         },
         {
-          title: "Step 02 — Mobile IA & flow design",
+          title: "Step 02 — Information architecture & design patterns",
           description:
-            "Designed a layered IA: glanceable ‘Now’ state, a timeline for upcoming steps, and deep-dive modals for contingencies. Added offline fallbacks for boarding pass storage and gate directions.",
+            'Designed layered IA prioritizing a "glanceable now" state: Decision Cockpit card answers designed to target <8s decision time, will validate in March 2026 pilot.',
           image: {
             src: "/DesignSystem-02.png",
             alt: "Mobile flow wireframes and IA layouts",
@@ -646,7 +645,7 @@ export const caseStudies: CaseStudy[] = [
           ],
         },
         {
-          title: "Step 03 — Validation & polish",
+          title: "Step 03 — Usability testing & design refinement",
           description:
             "Tested high-fidelity prototypes with frequent and infrequent travelers. Optimized notification timing and simplified the offline-ready checklist for unstable airport Wi‑Fi.",
           image: {

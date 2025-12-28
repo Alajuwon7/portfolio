@@ -261,7 +261,11 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   <span className={styles.stepNumber}>
                     {`Step ${String(index + 1).padStart(2, "0")}`}
                   </span>
-                  <h3 className={styles.stepTitle}>{step.title}</h3>
+                  <h3 className={styles.stepTitle}>
+                    {step.title === "Step 01 — Field research & journey mapping"
+                      ? "Step 01 — Discovery & jobs-to-be-done framework"
+                      : step.title}
+                  </h3>
                   <p className={styles.stepDescription}>{step.description}</p>
                   {step.extraDetails && step.extraDetails.length > 0 && (
                     <details className={styles.stepDetails}>
