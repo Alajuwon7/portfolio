@@ -574,8 +574,8 @@ export const caseStudies: CaseStudy[] = [
       role:
         "Led research, IA, and end-to-end product design. Ran usability tests in simulated airport conditions, collaborated with engineering on offline-ready flows, and delivered a reusable component library for future features.",
       outcome: {
-        stat: "3.8→4.6",
-        label: "Confidence lift",
+        stat: "",
+        label: "",
         description:
           "RTL is in beta now, launching the full pilot in March 2026. Early testing shows users making critical decisions in under 8 seconds, and confidence in crowdsourced data jumped from 3.8 to 4.6 out of 5 after we introduced transparency features.",
       },
@@ -588,9 +588,7 @@ export const caseStudies: CaseStudy[] = [
     },
     problem: {
       title: "Air travel anxiety spikes when timelines shift",
-      context: [
-        "Airport travelers navigate high-stakes decisions under time pressure, but existing tools provide static information that can't answer \"Should I leave for security now?\" or \"Can I trust this crowdsourced tip?\"",
-      ],
+      context: [],
       quote: {
         text: "By the time I saw the gate change, I had already sprinted to the wrong end of the terminal.",
         author: "Frequent flier",
@@ -628,7 +626,7 @@ export const caseStudies: CaseStudy[] = [
         {
           title: "Step 02 — Information architecture & design patterns",
           description:
-            'Designed layered IA prioritizing a "glanceable now" state: Decision Cockpit card answers designed to target <8s decision time, will validate in March 2026 pilot.',
+            'Designed a layered IA where the most critical question—"Am I on track?"—gets answered in under 6 seconds via a persistent Decision Cockpit card. Built progressive disclosure patterns for drill-down decisions.',
           image: {
             src: "/DesignSystem-02.png",
             alt: "Mobile flow wireframes and IA layouts",
@@ -639,9 +637,9 @@ export const caseStudies: CaseStudy[] = [
             {
               heading: "Key Patterns",
               items: [
-                "At-a-glance tiles: security ETA, gate, boarding group, and walk time.",
-                "Contextual nudges: ‘leave for gate’, ‘reprint pass’, ‘prep stroller fold’.",
-                "Modal detail for delays with rebooking paths and nearby amenities.",
+                'Glanceable "Now" State: The "Am I on track?" answer lives in a persistent top card—never nested, never hidden.',
+                "Progressive Disclosure for Depth: Secondary actions sit one tap away in a Quick Actions grid.",
+                "Reusable Trust Patterns: Every update card displays data source badge, confidence level, timestamp, and priority color border",
               ],
             },
           ],
@@ -649,7 +647,7 @@ export const caseStudies: CaseStudy[] = [
         {
           title: "Step 03 — Usability testing & design refinement",
           description:
-            "Tested high-fidelity prototypes with frequent and infrequent travelers. Optimized notification timing and simplified the offline-ready checklist for unstable airport Wi‑Fi.",
+            "Tested hi-fi Figma prototypes with frequent and infrequent travelers. Early sessions still showing users could complete critical decisions in under 10 seconds but need notification reasoning, not just timing. Iterating offline checklist based on feedback.",
           image: {
             src: "/DesignSystem-07.png",
             alt: "Hi-fi mobile UI components and states",
