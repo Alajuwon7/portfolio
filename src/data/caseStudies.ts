@@ -607,12 +607,15 @@ export const caseStudies: CaseStudy[] = [
           title: "Step 01 — Field research & journey mapping",
           description:
             "Shadowed travelers through check-in, security, and gate arrival to capture stress points. Mapped time-sensitive decisions (documents, bags, kid-handling) and where information broke down. Applied Jobs-to-be-Done framework to uncover what users truly “hire” an airport app to do: answer “Am I on track?” before anything else. Validated through trust testing that data source transparency builds confidence more than numeric scores.",
-          image: {
-            src: "/Discovery-1.png",
-            alt: "Field research artifacts and early journey mapping",
-            width: 3320,
-            height: 1556,
-          },
+          gallery: [
+            {
+              src: "https://res.cloudinary.com/kingaat7/image/upload/v1767083360/DiscoveryJTBD_vbxvqk.png",
+              alt: "JTBD discovery artifacts and early journey mapping",
+              width: 3000,
+              height: 1385,
+              link: "https://www.figma.com/board/6TnrggvkPN6yANycfCA8D8/RTL--Airport-Optimization-App?node-id=0-1&t=dALEhJF7Y81dlQ1d-1",
+            },
+          ],
           extraDetails: [
             {
               heading: "Key JTBD Insight",
@@ -627,12 +630,14 @@ export const caseStudies: CaseStudy[] = [
           title: "Step 02 — Information architecture & design patterns",
           description:
             'Designed a layered IA where the most critical question—"Am I on track?"—gets answered in under 6 seconds via a persistent Decision Cockpit card. Built progressive disclosure patterns for drill-down decisions.',
-          image: {
-            src: "/DesignSystem-02.png",
-            alt: "Mobile flow wireframes and IA layouts",
-            width: 2504,
-            height: 1772,
-          },
+          gallery: [
+            {
+              src: "https://res.cloudinary.com/kingaat7/image/upload/v1767089387/IA_PrincBackground_Shadow_uzlv8f.png",
+              alt: "IA principles and decision support patterns overview",
+              width: 2504,
+              height: 1772,
+            },
+          ],
           extraDetails: [
             {
               heading: "Key Patterns",
@@ -648,19 +653,21 @@ export const caseStudies: CaseStudy[] = [
           title: "Step 03 — Usability testing & design refinement",
           description:
             "Tested hi-fi Figma prototypes with frequent and infrequent travelers. Early sessions still showing users could complete critical decisions in under 10 seconds but need notification reasoning, not just timing. Iterating offline checklist based on feedback.",
-          image: {
-            src: "/DesignSystem-07.png",
-            alt: "Hi-fi mobile UI components and states",
-            width: 2636,
-            height: 956,
-          },
+          gallery: [
+            {
+              src: "https://res.cloudinary.com/kingaat7/image/upload/v1767123516/Step3DesignIteration._ecwwrd.png",
+              alt: "Hi-fi mobile UI components and states",
+              width: 2636,
+              height: 956,
+            },
+          ],
           extraDetails: [
             {
               heading: "Improvements from Testing",
               items: [
-                "Raised contrast and tap targets for one-handed use with luggage.",
-                "Bundled multiple alerts into a single actionable card during gate changes.",
-                "Added a persistent ‘Plan B’ tab for backup routes and amenity maps.",
+                'Testing Approach: Ran think-aloud usability sessions with realistic scenarios: "Your flight boards in 47 minutes and you\'re at the airport entrance."',
+                'Early Insights on Time-to-Decision: Users don\'t trust bare commands like "Leave now." Adding context ("Leave in 8 min to maintain comfortable buffer") increased confidence and compliance.',
+                "Redesigned v2 (3 essential steps): Screenshot boarding pass + gate number; check security wait (app caches automatically); enable offline mode in settings.",
               ],
             },
           ],
