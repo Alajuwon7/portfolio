@@ -988,7 +988,7 @@
   gap: 0.4rem;
 }
 
-.showcaseHeader p {
+.showcaseHeader p:not(.showcaseSubtext) {
   text-transform: uppercase;
   letter-spacing: 0.18em;
   color: var(--color-primary);
@@ -999,6 +999,14 @@
   font-size: clamp(2rem, 5vw, 3rem);
   font-family: var(--font-display), var(--font-inter), "Inter", system-ui,
     sans-serif;
+}
+
+.showcaseSubtext {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: none;
+  width: 100%;
+  text-transform: none;
 }
 
 .showcaseCarousel {

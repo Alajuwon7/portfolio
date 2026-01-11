@@ -337,9 +337,24 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <section className={styles.showcaseSection}>
           <div className={styles.showcaseHeader}>
             <p>Design Showcase</p>
-            <h2>Artifacts that prove the evolution of the system.</h2>
+            <h2>
+              {isRushCaseStudy
+                ? "Key screens showing transparency-first design in action."
+                : "Artifacts that prove the evolution of the system."}
+            </h2>
+            {isRushCaseStudy ? (
+              <p className={styles.showcaseSubtext}>
+                Still actively testing and iterating: trust signals on every update and
+                glanceable decision support.
+                Each screen reflects the patterns we're validating through testing—designed
+                for travelers making high-stakes decisions under time pressure.
+              </p>
+            ) : null}
           </div>
-          <DesignShowcaseCarousel slides={study.designShowcase.images} />
+          <DesignShowcaseCarousel
+            slides={study.designShowcase.images}
+            isRushCaseStudy={isRushCaseStudy}
+          />
         </section>
 
         <section className={styles.decisionsSection}>

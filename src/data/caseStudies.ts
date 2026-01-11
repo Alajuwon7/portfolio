@@ -120,6 +120,32 @@ export type CaseStudy = {
   }>;
 };
 
+const createPlaceholderImage = (label: string) => {
+  const safeLabel = label
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  const svg = `
+    <svg width="1440" height="900" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${safeLabel}">
+      <defs>
+        <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stop-color="#e2e8f0"/>
+          <stop offset="100%" stop-color="#f8fafc"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="900" fill="url(#bg)"/>
+      <rect x="150" y="90" width="1140" height="720" rx="48" fill="#f8fafc" stroke="#cbd5e1" stroke-width="10"/>
+      <rect x="230" y="170" width="980" height="560" rx="38" fill="#e5e7eb" stroke="#cbd5e1" stroke-width="8" stroke-dasharray="18 14"/>
+      <text x="50%" y="50%" text-anchor="middle" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700" letter-spacing="1">
+        ${safeLabel}
+      </text>
+    </svg>
+  `;
+
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+};
+
 export const caseStudies: CaseStudy[] = [
   {
     slug: "cdc-data-platform",
@@ -677,25 +703,87 @@ export const caseStudies: CaseStudy[] = [
     designShowcase: {
       images: [
         {
-          id: "rtl-showcase-1",
-          category: "Hi-fi",
-          caption: "Core mobile screens showing live queue, devices, and lighting controls.",
+          id: "rtl-hub-home",
+          category: "Low-Fi",
+          caption:
+            "Hub screen brings the next milestone, quick actions, and live updates into one view so travelers see what matters first, then dive deeper only when needed.",
           image: {
-            src: "https://res.cloudinary.com/kingaat7/image/upload/v1766802730/_Posts_enirvr.png",
-            alt: "Mobile app core screens",
-            width: 1536,
-            height: 1125,
+            src: createPlaceholderImage("Travel Feed Hub"),
+            alt: "Travel hub screen with next milestone, quick actions, and live updates",
+            width: 1440,
+            height: 900,
           },
         },
         {
-          id: "rtl-showcase-2",
-          category: "Mid-fi",
-          caption: "Flow diagrams for delay handling and gate change decisioning.",
+          id: "rtl-home-decision-cockpit",
+          category: "Low-Fi",
+          caption:
+            'Decision Cockpit — All critical information in one glanceable view. No menu diving. Users answer "Am I on track?" in under 3 seconds, addressing the #1 pain point from pre-pilot research: uncertainty in unfamiliar airports.',
           image: {
-            src: "/DesignSystem-03.png",
-            alt: "Flow charts and mid-fi UI states",
-            width: 7514,
-            height: 3152,
+            src: createPlaceholderImage("Decision Cockpit Screen"),
+            alt: "Decision Cockpit home screen summarizing on-track status",
+            width: 1440,
+            height: 900,
+          },
+        },
+        {
+          id: "rtl-trust-signals-feed",
+          category: "Low-Fi",
+          caption:
+            "Trust signals integrated into every update: data source badges (Official vs. Crowdsourced), confidence levels (High/Medium/Low), and color-coded timestamps. Priority borders guide attention—red for urgent, purple for moderate, gray for info.",
+          image: {
+            src: "/rtl-trust-signals-feed.png",
+            alt: "Real-time updates feed with trust badges and timestamps",
+            width: 1440,
+            height: 900,
+          },
+        },
+        {
+          id: "rtl-journey-timeline",
+          category: "Low-Fi",
+          caption:
+            "Journey Timeline shows travelers where they are in the airport experience. Completed stages fade to gray, current stage highlights in purple, upcoming stages show ETA. Reduces cognitive load by filtering out irrelevant information.",
+          image: {
+            src: createPlaceholderImage("Journey Timeline"),
+            alt: "Airport stages timeline with current progress indicator",
+            width: 1440,
+            height: 900,
+          },
+        },
+        {
+          id: "rtl-progressive-disclosure",
+          category: "Low-Fi",
+          caption:
+            "Progressive disclosure in action: summary view prevents information overload, but users can tap to understand the math. A/B testing shows users fell more confident when they could see the reasoning (4.6/5) vs. bare commands (3.2/5).",
+          image: {
+            src: createPlaceholderImage("Calculation Breakdown"),
+            alt: "Progressive disclosure showing calculation breakdown for timing",
+            width: 1440,
+            height: 900,
+          },
+        },
+        {
+          id: "rtl-offline-mode",
+          category: "Low-Fi",
+          caption:
+            "Offline-ready architecture prevents the app from becoming useless when airport Wi-Fi drops. Cached data surfaces with clear warnings, and manual alternatives direct users to physical resources (monitors, staff). Early testing: 89% successfully navigated with no connectivity.",
+          image: {
+            src: createPlaceholderImage("Offline Mode"),
+            alt: "Offline mode screen illustrating graceful degradation pattern",
+            width: 1440,
+            height: 900,
+          },
+        },
+        {
+          id: "rtl-profile-hub",
+          category: "Low-Fi",
+          caption:
+            "Profile hub centralizes traveler identity, preferences, and support shortcuts so guidance and notifications stay personalized wherever they are in the journey.",
+          image: {
+            src: createPlaceholderImage("Profile Hub"),
+            alt: "Profile screen with traveler details and preferences",
+            width: 1440,
+            height: 900,
           },
         },
       ],
