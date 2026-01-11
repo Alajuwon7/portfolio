@@ -1093,25 +1093,6 @@ function ProfileHubView() {
             Save Changes
           </button>
         </div>
-
-        <nav className="flex items-center justify-around border-t border-neutral-200 bg-white px-4 py-3 text-xs text-neutral-700">
-          <div className="flex flex-col items-center gap-1">
-            <span aria-hidden className="text-lg text-neutral-600">⌂</span>
-            <span className="text-neutral-600">Home</span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <span aria-hidden className="text-lg text-neutral-600">⋯</span>
-            <span className="text-neutral-600">Navigate</span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <span aria-hidden className="text-lg text-neutral-600">≋</span>
-            <span className="text-neutral-600">Feed</span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <span aria-hidden className="text-lg text-neutral-900">👤</span>
-            <span className="text-neutral-900 font-semibold">Profile</span>
-          </div>
-        </nav>
       </div>
     </div>
   );
