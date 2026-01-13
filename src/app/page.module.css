@@ -399,25 +399,15 @@
 }
 
 .servicesSection::before {
-  background-image: url("https://www.figma.com/api/mcp/asset/902634b3-0235-4342-a366-a7cff36b9ec8");
-  background-size: contain;
+  background-image: url("/FrameBGServ.png");
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.4;
-  filter: blur(10px);
+  opacity: 0.35;
 }
 
 .servicesSection::after {
-  background-image: url("https://www.figma.com/api/mcp/asset/902634b3-0235-4342-a366-a7cff36b9ec8"),
-    url("https://www.figma.com/api/mcp/asset/902634b3-0235-4342-a366-a7cff36b9ec8");
-  background-repeat: no-repeat;
-  background-position:
-    left -80px top 20px,
-    right -40px bottom -30px;
-  background-size:
-    220px,
-    280px;
-  opacity: 0.7;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.65));
 }
 
 .serviceHero,

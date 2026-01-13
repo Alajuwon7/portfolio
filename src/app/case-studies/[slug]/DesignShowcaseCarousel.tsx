@@ -13,6 +13,7 @@ export type ShowcaseSlide = {
   caption: string;
   link?: string;
   video?: string;
+  hiFiSrc?: string;
   image: {
     src: string;
     alt: string;
@@ -26,6 +27,8 @@ type PreparedSlide = ShowcaseSlide & { computedSrc: string };
 type DesignShowcaseCarouselProps = {
   slides: ShowcaseSlide[];
   isRushCaseStudy?: boolean;
+  hiFiSlides?: ShowcaseSlide[];
+  enableFidelityToggle?: boolean;
 };
 
 const buildPlaceholder = (label: string) => {
@@ -267,21 +270,6 @@ function RtlNavigationScreen() {
           </section>
         </main>
 
-        <nav className="mt-auto flex items-center justify-between border-t border-neutral-200 bg-white px-6 py-3 text-xs text-neutral-700">
-          {["Home", "Navigate", "Feed", "Profile"].map((item, idx) => (
-            <div
-              key={item}
-              className={`flex w-16 flex-col items-center gap-1 ${
-                idx === 1 ? "text-neutral-900 font-semibold" : ""
-              }`}
-            >
-              <span aria-hidden className="text-sm text-neutral-800">
-                {["⌂", "⇧", "≋", "◎"][idx]}
-              </span>
-              <span>{item}</span>
-            </div>
-          ))}
-        </nav>
       </div>
     </div>
   );
@@ -893,7 +881,6 @@ function ProfileHubView() {
             <span className="text-sm font-semibold text-neutral-900">Profile & Settings</span>
           </div>
           <div className="flex items-center gap-3 text-neutral-800">
-            <span aria-hidden className="text-lg">🔔</span>
             <span aria-hidden className="text-lg">☺</span>
           </div>
         </header>
@@ -1358,11 +1345,14 @@ function LegacyCarousel({ slides }: { slides: ShowcaseSlide[] }) {
 export default function DesignShowcaseCarousel({
   slides,
   isRushCaseStudy = false,
+  hiFiSlides,
+  enableFidelityToggle = false,
 }: DesignShowcaseCarouselProps) {
   if (!isRushCaseStudy) {
     return <LegacyCarousel slides={slides} />;
   }
 
+  const [fidelity, setFidelity] = useState<"lo" | "hi">("lo");
   const [activeIndex, setActiveIndex] = useState(-1);
   const [visibleIndex, setVisibleIndex] = useState(0);
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -1383,15 +1373,44 @@ export default function DesignShowcaseCarousel({
     [slides]
   );
 
+  const preparedHiFiSlides: PreparedSlide[] = useMemo(() => {
+    const source =
+      hiFiSlides && hiFiSlides.length
+        ? hiFiSlides
+        : slides.map((slide) => ({
+            ...slide,
+            id: `${slide.id}-hi`,
+            category: "Hi-Fi",
+            caption: slide.caption,
+            image: {
+              ...slide.image,
+              src: slide.hiFiSrc ?? slide.image.src,
+            },
+          }));
+
+    return source.map((slide) => {
+      const label = slide.image.alt || slide.caption || "Hi-fi design screen";
+      const placeholderSrc = buildPlaceholder(`${label} (Hi-Fi placeholder)`);
+      const computedSrc = slide.hiFiSrc ?? placeholderSrc;
+
+      return {
+        ...slide,
+        computedSrc,
+      };
+    });
+  }, [hiFiSlides, slides]);
+
+  const displayedSlides = fidelity === "hi" ? preparedHiFiSlides : preparedSlides;
+
   const lightboxSlides = useMemo(
     () =>
-      preparedSlides.map((slide) => ({
+      displayedSlides.map((slide) => ({
         src: slide.computedSrc,
         alt: slide.image.alt,
         description: slide.caption,
         title: slide.category,
       })),
-    [preparedSlides]
+    [displayedSlides]
   );
 
   useEffect(() => {
@@ -1436,7 +1455,13 @@ export default function DesignShowcaseCarousel({
     updateActiveFromScroll();
     viewport.addEventListener("scroll", onScroll, { passive: true });
     return () => viewport.removeEventListener("scroll", onScroll);
-  }, [preparedSlides.length]);
+  }, [displayedSlides.length, fidelity]);
+
+  useEffect(() => {
+    slideRefs.current = [];
+    setVisibleIndex(0);
+    setActiveIndex(-1);
+  }, [fidelity]);
 
   const scrollToIndex = (index: number) => {
     const viewport = viewportRef.current;
@@ -1450,18 +1475,18 @@ export default function DesignShowcaseCarousel({
   };
 
   const goPrev = () => {
-    if (!preparedSlides.length) return;
-    const next = (visibleIndex - 1 + preparedSlides.length) % preparedSlides.length;
+    if (!displayedSlides.length) return;
+    const next = (visibleIndex - 1 + displayedSlides.length) % displayedSlides.length;
     scrollToIndex(next);
   };
 
   const goNext = () => {
-    if (!preparedSlides.length) return;
-    const next = (visibleIndex + 1) % preparedSlides.length;
+    if (!displayedSlides.length) return;
+    const next = (visibleIndex + 1) % displayedSlides.length;
     scrollToIndex(next);
   };
 
-  if (!preparedSlides.length) return null;
+  if (!displayedSlides.length) return null;
 
   return (
     <div className="w-full space-y-4">
@@ -1472,124 +1497,173 @@ export default function DesignShowcaseCarousel({
         Skip to design showcase carousel
       </a>
 
-      <div
-        ref={viewportRef}
-        id="design-showcase-content"
-        className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 md:pb-6"
-        aria-label="Design showcase carousel"
-      >
-        {preparedSlides.map((slide, index) => (
-          <article
-            key={slide.id}
-            ref={(node: HTMLDivElement | null) => {
-              if (node) slideRefs.current[index] = node;
-            }}
-            className="snap-start"
-          >
-            <div className="flex min-w-[375px] max-w-[375px] flex-col gap-3">
-              {(() => {
-                const isCustom =
-                  slide.id === "rtl-hub-home" ||
-                  slide.id === "rtl-home-decision-cockpit" ||
-                  slide.id === "rtl-trust-signals-feed" ||
-                  slide.id === "rtl-journey-timeline" ||
-                  slide.id === "rtl-progressive-disclosure" ||
-                  slide.id === "rtl-profile-hub" ||
-                  slide.id === "rtl-offline-mode";
+      {enableFidelityToggle ? (
+        <div className="flex items-center justify-start gap-2">
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-500">
+            Fidelity
+          </span>
+          <div className="inline-flex rounded-full border border-neutral-300 bg-white shadow-sm">
+            <button
+              type="button"
+              onClick={() => setFidelity("lo")}
+              aria-pressed={fidelity === "lo"}
+              className={`px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition ${
+                fidelity === "lo"
+                  ? "bg-neutral-900 text-white"
+                  : "text-neutral-700 hover:bg-neutral-100"
+              }`}
+            >
+              LO-FI
+            </button>
+            <button
+              type="button"
+              onClick={() => setFidelity("hi")}
+              aria-pressed={fidelity === "hi"}
+              className={`px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition ${
+                fidelity === "hi"
+                  ? "bg-neutral-900 text-white"
+                  : "text-neutral-700 hover:bg-neutral-100"
+              }`}
+            >
+              HI-FI
+            </button>
+          </div>
+        </div>
+      ) : null}
 
-                const content = (
-                  <div
-                    className="relative w-full overflow-hidden rounded-lg border border-gray-200 bg-slate-100 transition duration-200 ease-out group-hover:scale-[1.02] group-hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
-                    style={{ maxWidth: "375px" }}
-                  >
-                    {slide.id === "rtl-hub-home" ? (
-                      <div className="flex h-full w-full items-center justify-center bg-neutral-50">
-                        <HubHomeView />
-                      </div>
-                    ) : slide.id === "rtl-home-decision-cockpit" ? (
-                      <div className="flex h-full w-full items-center justify-center bg-neutral-50">
-                        <RtlNavigationScreen />
-                      </div>
-                    ) : slide.id === "rtl-trust-signals-feed" ? (
-                      <div className="flex h-full w-full items-center justify-center bg-neutral-50">
-                        <TrustSignalsFeed />
-                      </div>
-                    ) : slide.id === "rtl-journey-timeline" ? (
-                      <div className="flex h-full w-full items-center justify-center bg-neutral-50">
-                        <JourneyTimelineView />
-                      </div>
-                    ) : slide.id === "rtl-progressive-disclosure" ? (
-                      <div className="flex h-full w-full items-center justify-center bg-neutral-50">
-                        <ProgressiveDisclosureView />
-                      </div>
-                    ) : slide.id === "rtl-profile-hub" ? (
-                      <div className="flex h-full w-full items-center justify-center bg-neutral-50">
-                        <ProfileHubView />
-                      </div>
-                    ) : slide.id === "rtl-offline-mode" ? (
-                      <div className="flex h-full w-full items-center justify-center bg-neutral-50">
-                        <OfflineModeView />
-                      </div>
-                    ) : (
-                      <>
-                        <Image
-                          src={slide.computedSrc}
-                          alt={slide.image.alt}
-                          width={375}
-                          height={Math.max(slide.image.height, 1)}
-                          sizes="375px"
-                          loading="lazy"
-                          className="h-auto w-full object-cover"
-                        />
-                        <div className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-b from-black/5 via-transparent to-black/12 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
-                      </>
-                    )}
-                  </div>
-                );
+      <div className="relative">
+        <div
+          ref={viewportRef}
+          id="design-showcase-content"
+          className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 md:pb-6"
+          aria-label="Design showcase carousel"
+        >
+          {displayedSlides.map((slide, index) => (
+            <article
+              key={slide.id}
+              ref={(node: HTMLDivElement | null) => {
+                if (node) slideRefs.current[index] = node;
+              }}
+              className="snap-start"
+            >
+              <div className="flex min-w-[375px] max-w-[375px] flex-col gap-3">
+                {(() => {
+                  const isCustom =
+                    slide.id === "rtl-hub-home" ||
+                    slide.id === "rtl-home-decision-cockpit" ||
+                    slide.id === "rtl-trust-signals-feed" ||
+                    slide.id === "rtl-journey-timeline" ||
+                    slide.id === "rtl-progressive-disclosure" ||
+                    slide.id === "rtl-profile-hub" ||
+                    slide.id === "rtl-offline-mode";
 
-                if (isCustom) {
-                  return (
+                  const content = (
                     <div
-                      role="button"
-                      tabIndex={0}
+                      className="relative w-full overflow-hidden rounded-lg border border-gray-200 bg-slate-100 transition duration-200 ease-out group-hover:scale-[1.02] group-hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                      style={{ maxWidth: "375px" }}
+                    >
+                      {slide.id === "rtl-hub-home" ? (
+                        <div className="flex h-full w-full items-center justify-center bg-neutral-50">
+                          <HubHomeView />
+                        </div>
+                      ) : slide.id === "rtl-home-decision-cockpit" ? (
+                        <div className="flex h-full w-full items-center justify-center bg-neutral-50">
+                          <RtlNavigationScreen />
+                        </div>
+                      ) : slide.id === "rtl-trust-signals-feed" ? (
+                        <div className="flex h-full w-full items-center justify-center bg-neutral-50">
+                          <TrustSignalsFeed />
+                        </div>
+                      ) : slide.id === "rtl-journey-timeline" ? (
+                        <div className="flex h-full w-full items-center justify-center bg-neutral-50">
+                          <JourneyTimelineView />
+                        </div>
+                      ) : slide.id === "rtl-progressive-disclosure" ? (
+                        <div className="flex h-full w-full items-center justify-center bg-neutral-50">
+                          <ProgressiveDisclosureView />
+                        </div>
+                      ) : slide.id === "rtl-profile-hub" ? (
+                        <div className="flex h-full w-full items-center justify-center bg-neutral-50">
+                          <ProfileHubView />
+                        </div>
+                      ) : slide.id === "rtl-offline-mode" ? (
+                        <div className="flex h-full w-full items-center justify-center bg-neutral-50">
+                          <OfflineModeView />
+                        </div>
+                      ) : (
+                        <>
+                          <Image
+                            src={slide.computedSrc}
+                            alt={slide.image.alt}
+                            width={375}
+                            height={Math.max(slide.image.height, 1)}
+                            sizes="375px"
+                            loading="lazy"
+                            className="h-auto w-full object-cover"
+                          />
+                          <div className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-b from-black/5 via-transparent to-black/12 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
+                        </>
+                      )}
+                    </div>
+                  );
+
+                  if (isCustom) {
+                    return (
+                      <div
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => setActiveIndex(index)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            setActiveIndex(index);
+                          }
+                        }}
+                        className="group relative block w-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-primary)]"
+                        aria-label={`Open ${slide.category} design in a modal`}
+                      >
+                        {content}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <button
+                      type="button"
                       onClick={() => setActiveIndex(index)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          setActiveIndex(index);
-                        }
-                      }}
                       className="group relative block w-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-primary)]"
                       aria-label={`Open ${slide.category} design in a modal`}
                     >
                       {content}
-                    </div>
+                    </button>
                   );
-                }
+                })()}
 
-                return (
-                  <button
-                    type="button"
-                    onClick={() => setActiveIndex(index)}
-                    className="group relative block w-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-primary)]"
-                    aria-label={`Open ${slide.category} design in a modal`}
-                  >
-                    {content}
-                  </button>
-                );
-              })()}
-
-              <div className="flex flex-col gap-1.5 max-w-[375px] px-4 pt-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-600">
-                  {slide.category}
-                </p>
-                <p className="text-sm leading-[1.5] text-gray-700">
-                  {slide.caption}
-                </p>
+                <div className="flex flex-col gap-1.5 max-w-[375px] px-4 pt-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-600">
+                    {slide.category}
+                  </p>
+                  {fidelity !== "hi" ? (
+                    <p className="text-sm leading-[1.5] text-gray-700">
+                      {slide.caption}
+                    </p>
+                  ) : null}
+                </div>
               </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={goNext}
+          aria-label="Scroll right to see more screens"
+          className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full border border-neutral-300 bg-white/90 px-3 py-2 text-sm font-semibold text-neutral-800 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+        >
+          <span className="flex items-center gap-1">
+            <span className="text-xs uppercase tracking-wide text-neutral-600">Scroll</span>
+            <span aria-hidden="true" className="text-base">→</span>
+          </span>
+        </button>
       </div>
 
 
@@ -1616,8 +1690,8 @@ export default function DesignShowcaseCarousel({
         render={{
           slide: () => {
             const currentId =
-              activeIndex >= 0 && activeIndex < preparedSlides.length
-                ? preparedSlides[activeIndex].id
+              activeIndex >= 0 && activeIndex < displayedSlides.length
+                ? displayedSlides[activeIndex].id
                 : undefined;
 
             if (currentId === "rtl-hub-home") {

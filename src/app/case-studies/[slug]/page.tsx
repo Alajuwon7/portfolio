@@ -91,13 +91,75 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
   const isRushCaseStudy = slug === "rush-the-line";
 
-  const problemSolutionPairs = isRushCaseStudy
+  const problemSolutionPairs: Array<{
+    problem: React.ReactNode;
+    solution: React.ReactNode;
+  }> = isRushCaseStudy
     ? [
         {
           problem:
-            'Airport travelers face critical decisions under time pressure but cannot evaluate the trustworthiness of real-time crowdsourced data— a gate change from 45 minutes ago is not as reliable as one from 2 minutes ago, yet most apps do not communicate this difference. When boarding starts in 30 minutes, they need immediate answers like "Am I on track?" but must hunt through fragmented information scattered across airline APIs, TSA systems, and vendor databases that often conflict or go offline. Generic navigation cannot serve diverse needs: wheelchair users need accessible routes, families need nursing rooms, business travelers need lounges, and risk tolerance varies from those who arrive 2 hours early to those who cut it close.',
-          solution:
-            'RTL addresses these challenges through multi-layered transparency: every update displays its data source (crowdsourced vs. official), confidence level (high/medium/low), and color-coded timestamp freshness, with red borders for urgent alerts and purple for moderate priority. A persistent "Decision Cockpit" card answers "Am I on track?" by combining walk time, current wait, and personalized departure recommendations, while a color-coded journey timeline tracks progress through airport stages. Adaptive personalization activates wheelchair-accessible routes, family amenities, or business lounges based on user context, while learning risk tolerance from past behavior to calibrate buffer time recommendations.',
+            <>
+              <mark style={{ backgroundColor: "#fff59d" }}>
+                Airport travelers are forced to make high-stakes decisions under extreme time
+                pressure
+              </mark>
+              —often while walking, carrying bags, managing kids, or navigating accessibility
+              constraints—yet today’s tools don’t help them answer the only question that matters in
+              the moment: “Am I on track?”
+              <mark style={{ backgroundColor: "#fff59d" }}>
+                The core issue isn’t lack of information; it’s lack of decision-grade clarity.
+              </mark>{" "}
+              Real-time signals are fragmented across airline updates, TSA conditions, maps, and
+              vendor systems, and they frequently conflict, lag, or go offline. Even when apps show
+              “live” updates, they rarely communicate data reliability—so a gate change from 45
+              minutes ago can appear as credible as one from 2 minutes ago.{" "}
+              <mark style={{ backgroundColor: "#fff59d" }}>
+                Users can’t quickly judge what to trust, what to ignore, or what action to take.
+              </mark>
+              Generic navigation assumes one “average” user, but airport decisions depend on
+              context and constraints: wheelchair users need accessible routes, families need
+              nursing rooms and restrooms, business travelers optimize for lounges and speed, and
+              different people carry different risk tolerance—from highly buffered planners to
+              last-minute movers.{" "}
+              <mark style={{ backgroundColor: "#fff59d" }}>
+                Without a system that adapts to these differences and translates messy signals into
+                a clear recommendation, travelers default to guessing, over-buffering, or missing
+                key moments—resulting in avoidable stress, wasted time, and missed connections
+              </mark>
+              .
+            </>,
+          solution: (
+            <>
+              <mark style={{ backgroundColor: "#fff59d" }}>
+                Rush The Line turns fragmented airport signals into one trusted, time-aware
+                decision system.
+              </mark>{" "}
+              Instead of dumping “real-time” info with no credibility cues, RTL makes every update
+              actionable by attaching provenance + reliability + freshness: source (official vs
+              crowdsourced), confidence (high/med/low), and “last updated” age—so a 2-minute gate
+              change is instantly distinguishable from stale noise.
+              <mark style={{ backgroundColor: "#fff59d" }}>
+                At the center is a persistent Decision Cockpit that answers the only question that
+                matters in motion: “Am I on track?
+              </mark>{" "}
+              RTL continuously calculates a traveler’s dynamic risk score by combining walking time,
+              queue estimates, gate status, and time-to-board—then converts it into a clear
+              recommendation (“Leave now,” “You’re safe for a quick stop,” “Reroute to Checkpoint
+              B”) with a visible explanation (“Why this”) to preserve trust.
+              <mark style={{ backgroundColor: "#fff59d" }}>
+                It personalizes routing and suggestions based on access needs, companion context,
+                and preferences
+              </mark>{" "}
+              (wheelchair routes, nursing rooms, lounges, dietary filters), and it learns the
+              user’s risk tolerance over time—tight vs buffered travelers—so guidance stays aligned
+              with how they actually move.
+              <mark style={{ backgroundColor: "#fff59d" }}>
+                RTL degrades gracefully using confidence-based fallbacks and lightweight user
+                verification, ensuring the experience remains reliable even when the environment
+                isn’t.
+              </mark>
+            </>
+          ),
         },
       ]
     : [
@@ -229,8 +291,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 </div>
 
                 <div className={styles.diagramGrid}>
-                  {problemSolutionPairs.map((item) => (
-                    <div key={item.problem} className={styles.diagramRow}>
+                  {problemSolutionPairs.map((item, idx) => (
+                    <div key={`problem-solution-${idx}`} className={styles.diagramRow}>
                       <div className={`${styles.diagramCard} ${styles.diagramProblem}`}>
                         <p>{item.problem}</p>
                       </div>
@@ -354,6 +416,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           <DesignShowcaseCarousel
             slides={study.designShowcase.images}
             isRushCaseStudy={isRushCaseStudy}
+            enableFidelityToggle={isRushCaseStudy}
           />
         </section>
 
@@ -390,25 +453,27 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           </div>
         </section>
 
-        <section className={styles.resultsSection}>
-          <div className={styles.resultsHeader}>
-            <p>Results &amp; Impact</p>
-            <h2>Quantifiable proof the redesign mattered.</h2>
-          </div>
+        {!isRushCaseStudy && (
+          <section className={styles.resultsSection}>
+            <div className={styles.resultsHeader}>
+              <p>Results &amp; Impact</p>
+              <h2>Quantifiable proof the redesign mattered.</h2>
+            </div>
 
-          <div className={styles.resultsMetrics}>
-            {study.results.metrics.map((metric) => (
-              <article key={metric.label} className={styles.metricCard}>
-                <p className={styles.metricValue}>{metric.value}</p>
-                <p className={styles.metricLabel}>{metric.label}</p>
-                {metric.description && (
-                  <p className={styles.metricDescription}>{metric.description}</p>
-                )}
-              </article>
-            ))}
-          </div>
+            <div className={styles.resultsMetrics}>
+              {study.results.metrics.map((metric) => (
+                <article key={metric.label} className={styles.metricCard}>
+                  <p className={styles.metricValue}>{metric.value}</p>
+                  <p className={styles.metricLabel}>{metric.label}</p>
+                  {metric.description && (
+                    <p className={styles.metricDescription}>{metric.description}</p>
+                  )}
+                </article>
+              ))}
+            </div>
 
-        </section>
+          </section>
+        )}
 
         <section className={styles.caseNavSection}>
           <div className={styles.caseNavCard}>
