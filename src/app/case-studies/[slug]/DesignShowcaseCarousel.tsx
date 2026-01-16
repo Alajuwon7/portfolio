@@ -14,6 +14,7 @@ export type ShowcaseSlide = {
   link?: string;
   video?: string;
   hiFiSrc?: string;
+  hiFiCaption?: string;
   image: {
     src: string;
     alt: string;
@@ -1355,6 +1356,8 @@ export default function DesignShowcaseCarousel({
   const [fidelity, setFidelity] = useState<"lo" | "hi">("lo");
   const [activeIndex, setActiveIndex] = useState(-1);
   const [visibleIndex, setVisibleIndex] = useState(0);
+  const [isAtEnd, setIsAtEnd] = useState(false);
+  const [zoom, setZoom] = useState(1);
   const viewportRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<HTMLDivElement[]>([]);
 
@@ -1381,7 +1384,9 @@ export default function DesignShowcaseCarousel({
             ...slide,
             id: `${slide.id}-hi`,
             category: "Hi-Fi",
-            caption: slide.caption,
+            caption: slide.hiFiCaption ?? slide.caption,
+            hiFiSrc: slide.hiFiSrc,
+            hiFiCaption: slide.hiFiCaption,
             image: {
               ...slide.image,
               src: slide.hiFiSrc ?? slide.image.src,
@@ -1391,7 +1396,7 @@ export default function DesignShowcaseCarousel({
     return source.map((slide) => {
       const label = slide.image.alt || slide.caption || "Hi-fi design screen";
       const placeholderSrc = buildPlaceholder(`${label} (Hi-Fi placeholder)`);
-      const computedSrc = slide.hiFiSrc ?? placeholderSrc;
+      const computedSrc = slide.hiFiSrc ?? slide.image.src ?? placeholderSrc;
 
       return {
         ...slide,
@@ -1440,6 +1445,11 @@ export default function DesignShowcaseCarousel({
       });
 
       setVisibleIndex(closestIndex);
+      
+      // Check if we're at the end of the scrollable area
+      const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+      const isAtEndOfScroll = viewport.scrollLeft >= maxScroll - 10; // 10px threshold for floating point issues
+      setIsAtEnd(isAtEndOfScroll);
     };
 
     const onScroll = () => {
@@ -1497,45 +1507,102 @@ export default function DesignShowcaseCarousel({
         Skip to design showcase carousel
       </a>
 
-      {enableFidelityToggle ? (
-        <div className="flex items-center justify-start gap-2">
+      <div className="flex items-center justify-between gap-4">
+        {enableFidelityToggle ? (
+          <div className="flex items-center justify-start gap-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-500">
+              Fidelity
+            </span>
+            <div className="inline-flex rounded-full border border-neutral-300 bg-white shadow-sm">
+              <button
+                type="button"
+                onClick={() => setFidelity("lo")}
+                aria-pressed={fidelity === "lo"}
+                className={`px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition ${
+                  fidelity === "lo"
+                    ? "bg-neutral-900 text-white"
+                    : "text-neutral-700 hover:bg-neutral-100"
+                }`}
+              >
+                LO-FI
+              </button>
+              <button
+                type="button"
+                onClick={() => setFidelity("hi")}
+                aria-pressed={fidelity === "hi"}
+                className={`px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition ${
+                  fidelity === "hi"
+                    ? "bg-neutral-900 text-white"
+                    : "text-neutral-700 hover:bg-neutral-100"
+                }`}
+              >
+                HI-FI
+              </button>
+            </div>
+          </div>
+        ) : null}
+        
+        <div className="flex items-center gap-2">
           <span className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-500">
-            Fidelity
+            Zoom
           </span>
-          <div className="inline-flex rounded-full border border-neutral-300 bg-white shadow-sm">
+          <div className="inline-flex items-center gap-1 rounded-full border border-neutral-300 bg-white shadow-sm px-1">
             <button
               type="button"
-              onClick={() => setFidelity("lo")}
-              aria-pressed={fidelity === "lo"}
-              className={`px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition ${
-                fidelity === "lo"
-                  ? "bg-neutral-900 text-white"
+              onClick={() => setZoom((prev) => Math.max(0.5, prev - 0.25))}
+              aria-label="Zoom out"
+              disabled={zoom <= 0.5}
+              className={`px-2 py-1 text-xs font-semibold transition ${
+                zoom <= 0.5
+                  ? "cursor-not-allowed text-neutral-400"
                   : "text-neutral-700 hover:bg-neutral-100"
               }`}
             >
-              LO-FI
+              −
+            </button>
+            <span className="min-w-[3rem] text-center text-xs font-medium text-neutral-600">
+              {Math.round(zoom * 100)}%
+            </span>
+            <button
+              type="button"
+              onClick={() => setZoom((prev) => Math.min(2, prev + 0.25))}
+              aria-label="Zoom in"
+              disabled={zoom >= 2}
+              className={`px-2 py-1 text-xs font-semibold transition ${
+                zoom >= 2
+                  ? "cursor-not-allowed text-neutral-400"
+                  : "text-neutral-700 hover:bg-neutral-100"
+              }`}
+            >
+              +
             </button>
             <button
               type="button"
-              onClick={() => setFidelity("hi")}
-              aria-pressed={fidelity === "hi"}
-              className={`px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition ${
-                fidelity === "hi"
-                  ? "bg-neutral-900 text-white"
-                  : "text-neutral-700 hover:bg-neutral-100"
+              onClick={() => setZoom(1)}
+              aria-label="Reset zoom"
+              disabled={zoom === 1}
+              className={`px-2 py-1 text-xs font-medium transition ${
+                zoom === 1
+                  ? "cursor-not-allowed text-neutral-400"
+                  : "text-neutral-600 hover:bg-neutral-100"
               }`}
             >
-              HI-FI
+              Reset
             </button>
           </div>
         </div>
-      ) : null}
+      </div>
 
       <div className="relative">
         <div
           ref={viewportRef}
           id="design-showcase-content"
-          className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 md:pb-6"
+          className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:pb-6"
+          style={{
+            transform: `scale(${zoom})`,
+            transformOrigin: "top left",
+            transition: "transform 0.2s ease",
+          }}
           aria-label="Design showcase carousel"
         >
           {displayedSlides.map((slide, index) => (
@@ -1560,7 +1627,7 @@ export default function DesignShowcaseCarousel({
                   const content = (
                     <div
                       className="relative w-full overflow-hidden rounded-lg border border-gray-200 bg-slate-100 transition duration-200 ease-out group-hover:scale-[1.02] group-hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
-                      style={{ maxWidth: "375px" }}
+                      style={{ maxWidth: "375px", height: "780px" }}
                     >
                       {slide.id === "rtl-hub-home" ? (
                         <div className="flex h-full w-full items-center justify-center bg-neutral-50">
@@ -1596,10 +1663,10 @@ export default function DesignShowcaseCarousel({
                             src={slide.computedSrc}
                             alt={slide.image.alt}
                             width={375}
-                            height={Math.max(slide.image.height, 1)}
+                            height={780}
                             sizes="375px"
                             loading="lazy"
-                            className="h-auto w-full object-cover"
+                            className="h-full w-full object-cover"
                           />
                           <div className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-b from-black/5 via-transparent to-black/12 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
                         </>
@@ -1643,7 +1710,11 @@ export default function DesignShowcaseCarousel({
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-600">
                     {slide.category}
                   </p>
-                  {fidelity !== "hi" ? (
+                  {fidelity === "hi" && slide.hiFiCaption ? (
+                    <p className="text-sm leading-[1.5] text-gray-700">
+                      {slide.hiFiCaption}
+                    </p>
+                  ) : fidelity !== "hi" ? (
                     <p className="text-sm leading-[1.5] text-gray-700">
                       {slide.caption}
                     </p>
@@ -1655,13 +1726,26 @@ export default function DesignShowcaseCarousel({
         </div>
         <button
           type="button"
-          onClick={goNext}
-          aria-label="Scroll right to see more screens"
+          onClick={isAtEnd ? goPrev : goNext}
+          aria-label={
+            isAtEnd
+              ? "Scroll back to previous screens"
+              : "Scroll right to see more screens"
+          }
           className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full border border-neutral-300 bg-white/90 px-3 py-2 text-sm font-semibold text-neutral-800 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
         >
           <span className="flex items-center gap-1">
-            <span className="text-xs uppercase tracking-wide text-neutral-600">Scroll</span>
-            <span aria-hidden="true" className="text-base">→</span>
+            {isAtEnd ? (
+              <>
+                <span aria-hidden="true" className="text-base">←</span>
+                <span className="text-xs uppercase tracking-wide text-neutral-600">Previous</span>
+              </>
+            ) : (
+              <>
+                <span className="text-xs uppercase tracking-wide text-neutral-600">Scroll</span>
+                <span aria-hidden="true" className="text-base">→</span>
+              </>
+            )}
           </span>
         </button>
       </div>

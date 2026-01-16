@@ -75,6 +75,8 @@ export type CaseStudy = {
       caption: string;
       link?: string;
       video?: string;
+      hiFiSrc?: string;
+      hiFiCaption?: string;
       image: CaseStudyHero["image"];
     }>;
   };
@@ -570,7 +572,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "rush-the-line",
     hero: {
-      title: "Rush The Line: Designing Trust in Crowdsourced Airport Navigation",
+      title: "Rush The Line: Designing Calm in Chaos",
       subtitle:
         "A mobile app that calms airport anxiety with live queue insights, proactive alerts, and guided checklists for time-sensitive travelers.",
       image: {
@@ -581,7 +583,7 @@ export const caseStudies: CaseStudy[] = [
       },
       projectType: "Consumer Mobile App",
       year: "2024–2025",
-      duration: "14 Months (v10.0 Design Phase)",
+      duration: "(v10.0 Beta Phase)",
       role: "Lead Product Designer",
       platform: "iOS/Android",
       modal: {
@@ -713,6 +715,9 @@ export const caseStudies: CaseStudy[] = [
             width: 1440,
             height: 900,
           },
+          hiFiSrc: "/Splash2.png",
+          hiFiCaption:
+            "Welcome splash screen introduces Rush The Line with the app logo and tagline. The gradient-styled 'R' logo with motion lines communicates speed and efficiency, setting the tone for a travel companion that helps users move through airports quickly.",
         },
         {
           id: "rtl-home-decision-cockpit",
@@ -725,6 +730,9 @@ export const caseStudies: CaseStudy[] = [
             width: 1440,
             height: 900,
           },
+          hiFiSrc: "/Splash3.png",
+          hiFiCaption:
+            "Real-time navigation onboarding screen highlights the core value proposition with a location pin icon. The screen introduces key features—live updates and smart timing—helping first-time users understand how the app transforms airport navigation with AI-powered route optimization.",
         },
         {
           id: "rtl-trust-signals-feed",
@@ -737,6 +745,9 @@ export const caseStudies: CaseStudy[] = [
             width: 1440,
             height: 900,
           },
+          hiFiSrc: "/Splash1.png",
+          hiFiCaption:
+            "AI-powered assistance splash screen showcases intelligent features with a sparkle icon. Three feature cards—Smart Routes, Crowd Alerts, and Security Estimates—demonstrate how AI personalizes the experience by finding optimal paths, avoiding crowds, and providing wait time predictions before arrival.",
         },
         {
           id: "rtl-journey-timeline",
@@ -749,6 +760,9 @@ export const caseStudies: CaseStudy[] = [
             width: 1440,
             height: 900,
           },
+          hiFiSrc: "/LoadingScreen.png",
+          hiFiCaption:
+            "Loading screen maintains user engagement during app initialization. The personalized messaging ('Loading Your Experience') and animated progress indicators reassure users that their customized feed is being prepared, reducing perceived wait time and setting expectations for personalized content.",
         },
         {
           id: "rtl-progressive-disclosure",
@@ -761,6 +775,9 @@ export const caseStudies: CaseStudy[] = [
             width: 1440,
             height: 900,
           },
+          hiFiSrc: "/RTLlogin.png",
+          hiFiCaption:
+            "Sign-in screen provides a streamlined authentication experience with email and password fields. The toggle between 'Sign In' and 'Create Account' tabs, along with staff mode options and password recovery links, ensures quick access for both travelers and airport personnel. The gradient-branded design maintains visual consistency with the onboarding flow.",
         },
         {
           id: "rtl-offline-mode",
@@ -773,6 +790,9 @@ export const caseStudies: CaseStudy[] = [
             width: 1440,
             height: 900,
           },
+          hiFiSrc: "/Flight%23Modal.png",
+          hiFiCaption:
+            "Flight Information modal unlocks terminal-specific features by collecting flight details. The modal supports both flight number and confirmation code entry, with clear instructions and examples. The warning about airport locking ensures users understand that flight entry enables precise, location-aware updates and prevents accidental airport switching mid-journey.",
         },
         {
           id: "rtl-profile-hub",
@@ -785,6 +805,9 @@ export const caseStudies: CaseStudy[] = [
             width: 1440,
             height: 900,
           },
+          hiFiSrc: "/AIModal.png",
+          hiFiCaption:
+            "AI Summary modal surfaces real-time insights aggregated from Terminal B traveler reports. The summary presents key metrics—TSA wait times, crowded areas, trending topics, and verified staff reports—in a scannable format. This on-demand intelligence helps users make informed decisions about where to go, what to avoid, and when to move, all contextualized to their current terminal.",
         },
       ],
     },

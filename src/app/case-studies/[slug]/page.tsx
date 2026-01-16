@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { use } from "react";
 import { notFound } from "next/navigation";
 
 import { caseStudies, getCaseStudy } from "@/data/caseStudies";
@@ -8,6 +9,7 @@ import { caseStudies, getCaseStudy } from "@/data/caseStudies";
 import HeroMedia from "./HeroMedia";
 import DesignShowcaseCarousel from "./DesignShowcaseCarousel";
 import StepGallery from "./StepGallery";
+import Timeline from "./Timeline";
 import styles from "./case-study.module.css";
 
 type CaseStudyPageProps = {
@@ -25,12 +27,13 @@ export function generateStaticParams() {
   return caseStudies.map(({ slug }) => ({ slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
+  const { slug } = params;
   const study = getCaseStudy(slug);
 
   if (!study) {
@@ -46,8 +49,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
-  const { slug } = await params;
+export default function CaseStudyPage(props: CaseStudyPageProps) {
+  const params = use(props.params);
+  const { slug } = params;
   const study = getCaseStudy(slug);
 
   if (!study) {
@@ -57,7 +61,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const heroMeta = [
     { label: "Project Type", value: study.hero.projectType },
     { label: "Year", value: study.hero.year },
-    { label: "Duration", value: study.hero.duration },
+    { label: "Version", value: study.hero.duration },
     { label: "Role", value: study.hero.role },
     ...(study.hero.platform ? [{ label: "Platform", value: study.hero.platform }] : []),
   ];
@@ -422,57 +426,88 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
         <section className={styles.decisionsSection}>
           <div className={styles.decisionsHeader}>
-            <p>Key Decisions</p>
-            <h2>The inflection points that moved the project forward.</h2>
+            <div>
+              <p>App Feature Release</p>
+              <h2>Rush The Line Timeline</h2>
+            </div>
+            <a
+              href="https://rushtheline.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.joinBetaButton}
+            >
+              Join Waitlist
+            </a>
           </div>
 
-          <div className={styles.decisionsGrid}>
-            {study.keyDecisions.map((decision) => (
-              <article key={decision.title} className={styles.decisionCard}>
-                <h3 className={styles.decisionTitle}>{decision.title}</h3>
-                <div className={styles.decisionMeta}>
-                  <div className={styles.decisionMetaGroup}>
-                    <span className={styles.decisionMetaLabel}>Context</span>
-                    <p className={styles.decisionMetaValue}>{decision.context}</p>
-                  </div>
-                  <div className={styles.decisionMetaGroup}>
-                    <span className={styles.decisionMetaLabel}>Options</span>
-                    <p className={styles.decisionMetaValue}>{decision.options}</p>
-                  </div>
-                  <div className={styles.decisionMetaGroup}>
-                    <span className={styles.decisionMetaLabel}>Why this path</span>
-                    <p className={styles.decisionMetaValue}>{decision.decision}</p>
-                  </div>
-                  <div className={styles.decisionMetaGroup}>
-                    <span className={styles.decisionMetaLabel}>Outcome</span>
-                    <p className={styles.decisionMetaValue}>{decision.outcome}</p>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+          <Timeline
+            milestones={[
+              {
+                date: "DEC 2025",
+                title: "Launched Beta",
+                description: "",
+                status: "completed",
+                icon: "rocket",
+              },
+              {
+                date: "FEB 2026",
+                title: "Travel Feed",
+                description: "",
+                status: "completed",
+                icon: "check",
+              },
+              {
+                date: "APR 2026",
+                title: "",
+                description: "",
+                status: "future",
+                icon: "check",
+              },
+              {
+                date: "JUN 2026",
+                title: "",
+                description: "",
+                status: "future",
+                icon: "check",
+              },
+              {
+                date: "AUG 2026",
+                title: "",
+                description: "",
+                status: "future",
+                icon: "check",
+              },
+              {
+                date: "NOV 2026",
+                title: "",
+                description: "",
+                status: "future",
+                icon: "check",
+              },
+            ]}
+          />
         </section>
 
         {!isRushCaseStudy && (
-          <section className={styles.resultsSection}>
-            <div className={styles.resultsHeader}>
-              <p>Results &amp; Impact</p>
-              <h2>Quantifiable proof the redesign mattered.</h2>
-            </div>
+        <section className={styles.resultsSection}>
+          <div className={styles.resultsHeader}>
+            <p>Results &amp; Impact</p>
+            <h2>Quantifiable proof the redesign mattered.</h2>
+          </div>
 
-            <div className={styles.resultsMetrics}>
-              {study.results.metrics.map((metric) => (
-                <article key={metric.label} className={styles.metricCard}>
-                  <p className={styles.metricValue}>{metric.value}</p>
-                  <p className={styles.metricLabel}>{metric.label}</p>
-                  {metric.description && (
-                    <p className={styles.metricDescription}>{metric.description}</p>
-                  )}
-                </article>
-              ))}
-            </div>
+          <div className={styles.resultsMetrics}>
+            {study.results.metrics.map((metric) => (
+              <article key={metric.label} className={styles.metricCard}>
+                <p className={styles.metricValue}>{metric.value}</p>
+                <p className={styles.metricLabel}>{metric.label}</p>
+                {metric.description && (
+                  <p className={styles.metricDescription}>{metric.description}</p>
+                )}
+              </article>
+            ))}
+          </div>
 
-          </section>
+        </section>
         )}
 
         <section className={styles.caseNavSection}>

@@ -1193,8 +1193,10 @@
 
 .decisionsHeader {
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
 }
 
 .decisionsHeader p {
@@ -1204,10 +1206,46 @@
   font-size: 0.85rem;
 }
 
+.decisionsHeader > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
 .decisionsHeader h2 {
   font-size: clamp(2rem, 5vw, 3rem);
   font-family: var(--font-display), var(--font-inter), "Inter", system-ui,
     sans-serif;
+}
+
+.joinBetaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.75rem;
+  background: #000;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  border: 2px solid #000;
+}
+
+.joinBetaButton:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 143, 74, 0.25);
+}
+
+.joinBetaButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .decisionsGrid {
@@ -1564,3 +1602,249 @@
   }
 }
 
+/* Timeline Styles */
+.timelineContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+}
+
+.timelineBarWrapper {
+  position: relative;
+  width: 100%;
+  padding: 3rem 0 4rem;
+}
+
+.timelineBar {
+  position: relative;
+  width: 100%;
+}
+
+.timelineLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  display: flex;
+  transform: translateY(-50%);
+}
+
+.timelineLineSegment {
+  height: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.timelineLineSegmentActive {
+  background: var(--color-primary);
+}
+
+.timelineLineSegmentInactive {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.timelineMilestones {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.timelineMilestone {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.milestoneIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  position: relative;
+  z-index: 3;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+  border: 2px solid #fff;
+}
+
+.milestoneIconActive {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.milestoneIconInactive {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--color-text-secondary);
+}
+
+.milestoneIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.milestonePercentage {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.milestoneContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-align: center;
+  max-width: 160px;
+  margin-top: 0.25rem;
+}
+
+.milestoneDate {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+}
+
+.milestoneTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-neutral-900);
+  line-height: 1.3;
+}
+
+.milestoneDescription {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.timelineSegment {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 4px;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.timelineSegmentActive {
+  background: var(--color-primary);
+}
+
+.timelineSegmentInactive {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.timelineEvents {
+  position: relative;
+  width: 100%;
+  margin-top: 2rem;
+  min-height: 80px;
+}
+
+.timelineEvent {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.eventFlag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.eventConnector {
+  width: 2px;
+  height: 24px;
+  background: #e5e7eb;
+}
+
+.eventFlagInfo .eventConnector {
+  background: #22c55e;
+}
+
+.eventFlagAlert .eventConnector {
+  background: #ef4444;
+}
+
+.eventContent {
+  position: relative;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.eventFlagInfo .eventContent::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-left: 1px solid #22c55e;
+  border-top: 1px solid #22c55e;
+}
+
+.eventFlagAlert .eventContent::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-left: 1px solid #ef4444;
+  border-top: 1px solid #ef4444;
+}
+
+.eventDate {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.eventDescription {
+  font-size: 0.75rem;
+  color: var(--color-neutral-900);
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .timelineMilestones {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .timelineMilestone {
+    position: relative;
+    transform: none;
+    left: auto !important;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .timelineSegment {
+    display: none;
+  }
+
+  .milestoneContent {
+    max-width: 100%;
+  }
+}

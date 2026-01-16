@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef } from "react";
 import styles from "./page.module.css";
 
 const heroPortrait =
@@ -32,7 +32,7 @@ type ServiceHighlight = {
   title: string;
   variant: "dark" | "accent" | "light";
   image?: string;
-  customGraphic?: "automation" | "webDesign";
+  customGraphic?: "automation" | "webDesign" | "research";
 };
 
 
@@ -65,11 +65,13 @@ const portfolioProjects = [
     title: "Lirante — Food Delivery Solution",
     summary:
       "A glassmorphism inspired design system for a premium food delivery experience.",
+    slug: "cdc-data-platform",
   },
   {
     title: "Travel Feed — Airport Companion",
     summary:
       "A gamified mobile companion that reduces line anxiety with delightful UI.",
+    slug: "rush-the-line",
   },
 ];
 
@@ -78,6 +80,12 @@ const serviceHighlights: ServiceHighlight[] = [
     id: "highlight-dark",
     title: "UX/UI Design",
     image: highlightImageDark,
+    variant: "dark",
+  },
+  {
+    id: "highlight-research",
+    title: "Research",
+    customGraphic: "research",
     variant: "dark",
   },
   {
@@ -123,6 +131,7 @@ export default function Home() {
   }, []);
 
   const [activeNav, setActiveNav] = useState("home");
+  const serviceScrollRef = useRef<HTMLDivElement>(null);
 
   const handleNavClick = useCallback(
     (target: string) => {
@@ -131,6 +140,19 @@ export default function Home() {
     },
     [scrollToSection]
   );
+
+  const scrollServices = useCallback((direction: "prev" | "next") => {
+    if (!serviceScrollRef.current) return;
+    const container = serviceScrollRef.current;
+    const cardWidth = container.querySelector("article")?.clientWidth || 0;
+    const gap = 32; // Gap between cards (adjust based on CSS)
+    const scrollAmount = cardWidth + gap;
+    
+    container.scrollBy({
+      left: direction === "next" ? scrollAmount : -scrollAmount,
+      behavior: "smooth",
+    });
+  }, []);
 
   const handleEmailClick = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -297,16 +319,16 @@ export default function Home() {
       <section className={styles.servicesSection} id="services">
         <div className={styles.serviceHero}>
           <div>
-            <p className={styles.sectionLabel}>My Services</p>
+            <p className={styles.sectionLabel}>My Specialties</p>
             <h2>
-              <span>My Services</span>
+              <span>What I Do</span>
             </h2>
           </div>
           <p>
             I specialize in crafting user-centered digital experiences that enhance operational efficiency and drive business outcomes.
           </p>
         </div>
-        <div className={styles.serviceHighlights}>
+        <div className={styles.serviceHighlights} ref={serviceScrollRef}>
           {serviceHighlights.map((highlight) => (
             <article
               key={highlight.id}
@@ -334,6 +356,8 @@ export default function Home() {
                   <AutomationWorkflowGraphic />
                 ) : highlight.customGraphic === "webDesign" ? (
                   <WebsiteShowcaseGraphic />
+                ) : highlight.customGraphic === "research" ? (
+                  <ResearchGraphic />
                 ) : (
                   highlight.image && (
                     <Image
@@ -346,23 +370,6 @@ export default function Home() {
                   )
                 )}
               </div>
-              {highlight.id === "highlight-dark" ? (
-                <Link
-                  href="/case-studies/cdc-data-platform"
-                  className={styles.serviceHighlightCta}
-                  aria-label="View UX/UI Design case study"
-                >
-                  <span>↗</span>
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  className={styles.serviceHighlightCta}
-                  aria-label={`Explore ${highlight.title}`}
-                >
-                  <span>↗</span>
-                </button>
-              )}
             </article>
           ))}
         </div>
@@ -371,6 +378,7 @@ export default function Home() {
             type="button"
             className={styles.sliderButton}
             aria-label="Previous service"
+            onClick={() => scrollServices("prev")}
           >
             <span>↙</span>
           </button>
@@ -388,6 +396,7 @@ export default function Home() {
             type="button"
             className={styles.sliderButton}
             aria-label="Next service"
+            onClick={() => scrollServices("next")}
           >
             <span>↗</span>
           </button>
@@ -484,7 +493,11 @@ export default function Home() {
         </div>
         <div className={styles.portfolioGrid}>
           {portfolioProjects.map((project) => (
-            <article key={project.title} className={styles.portfolioCard}>
+            <Link
+              key={project.title}
+              href={`/case-studies/${project.slug}`}
+              className={styles.portfolioCard}
+            >
               <div className={styles.portfolioImage}>
                 <Image
                   src={portfolioVisual}
@@ -498,7 +511,7 @@ export default function Home() {
                 <h3>{project.title}</h3>
                 <p>{project.summary}</p>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </section>
@@ -540,10 +553,6 @@ export default function Home() {
         <div className={styles.footerColumns}>
           <div>
             <div className={styles.logoBadge}>AT</div>
-            <p>
-              Designing delightful digital products with a human touch for modern
-              teams worldwide.
-            </p>
           </div>
           <div>
             <h4>Navigation</h4>
@@ -560,14 +569,6 @@ export default function Home() {
               <li>hello@alajuwon.design</li>
               <li>@alajuwon.design</li>
             </ul>
-          </div>
-          <div>
-            <h4>Newsletter</h4>
-            <p>Get the latest design drop.</p>
-            <div className={styles.newsletterRow}>
-              <input placeholder="Email address" />
-              <button>→</button>
-            </div>
           </div>
         </div>
         <div className={styles.footerDivider} />
@@ -860,6 +861,106 @@ function WebsiteShowcaseGraphic() {
         height="8"
         rx="4"
         fill="#dbe1f2"
+      />
+    </svg>
+  );
+}
+
+function ResearchGraphic() {
+  return (
+    <svg
+      viewBox="0 0 360 220"
+      role="img"
+      aria-label="Research and discovery diagram"
+      className={styles.workflowGraphic}
+    >
+      <defs>
+        <linearGradient id="researchBg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#fff6ee" />
+          <stop offset="100%" stopColor="#ffe1c9" />
+        </linearGradient>
+        <linearGradient id="researchCard" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="100%" stopColor="#fff6ee" />
+        </linearGradient>
+        <linearGradient id="researchAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#ffd2b5" />
+          <stop offset="100%" stopColor="#ff8f3a" />
+        </linearGradient>
+      </defs>
+      <rect width="360" height="220" rx="28" fill="url(#researchBg)" />
+      
+      {/* User icon */}
+      <circle cx="80" cy="60" r="24" fill="url(#researchAccent)" />
+      <circle cx="80" cy="52" r="8" fill="#ffffff" />
+      <path
+        d="M 60 85 Q 60 75 80 75 Q 100 75 100 85"
+        stroke="#ffffff"
+        strokeWidth="4"
+        fill="none"
+      />
+      
+      {/* Interview/Notes card */}
+      <rect
+        x="140"
+        y="40"
+        width="180"
+        height="80"
+        rx="16"
+        fill="url(#researchCard)"
+        stroke="#ffd4b8"
+        strokeWidth="2"
+      />
+      <rect x="156" y="56" width="120" height="8" rx="4" fill="#ffc79f" />
+      <rect x="156" y="72" width="148" height="8" rx="4" fill="#ffe4d1" />
+      <rect x="156" y="88" width="100" height="8" rx="4" fill="#ffe4d1" />
+      <rect x="280" y="88" width="40" height="8" rx="4" fill="url(#researchAccent)" />
+      
+      {/* Data/Analytics card */}
+      <rect
+        x="40"
+        y="140"
+        width="140"
+        height="60"
+        rx="14"
+        fill="url(#researchCard)"
+        stroke="#ffd4b8"
+        strokeWidth="2"
+      />
+      <rect x="56" y="156" width="80" height="10" rx="5" fill="#ffc79f" />
+      <rect x="56" y="174" width="60" height="8" rx="4" fill="#ffe4d1" />
+      <rect x="56" y="186" width="70" height="8" rx="4" fill="#ffe4d1" />
+      
+      {/* Insights card */}
+      <rect
+        x="200"
+        y="140"
+        width="140"
+        height="60"
+        rx="14"
+        fill="url(#researchCard)"
+        stroke="#ffd4b8"
+        strokeWidth="2"
+      />
+      <circle cx="220" cy="165" r="6" fill="url(#researchAccent)" />
+      <circle cx="250" cy="165" r="6" fill="#ffc79f" />
+      <circle cx="280" cy="165" r="6" fill="#ffe4d1" />
+      <rect x="220" y="180" width="100" height="8" rx="4" fill="#ffe4d1" />
+      
+      {/* Connection lines */}
+      <path
+        d="M 104 60 L 140 80"
+        stroke="#ffd4b8"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeDasharray="4 4"
+      />
+      <path
+        d="M 120 170 L 200 170"
+        stroke="#ffd4b8"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeDasharray="4 4"
       />
     </svg>
   );
