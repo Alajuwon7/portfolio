@@ -791,7 +791,7 @@ export const caseStudies: CaseStudy[] = [
             width: 1440,
             height: 900,
           },
-          hiFiSrc: "/Flight%23Modal.png",
+          hiFiSrc: "/FlightModal.png",
           hiFiCaption:
             "Flight Information modal unlocks terminal-specific features by collecting flight details. The modal supports both flight number and confirmation code entry, with clear instructions and examples. The warning about airport locking ensures users understand that flight entry enables precise, location-aware updates and prevents accidental airport switching mid-journey.",
         },
