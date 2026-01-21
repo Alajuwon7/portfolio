@@ -549,7 +549,7 @@ export default function Home() {
           <button
             type="button"
             className={styles.primaryButton}
-            onClick={() => scrollToSection("contact")}
+            onClick={handleEmailClick}
           >
             Contact me
           </button>
@@ -558,14 +558,6 @@ export default function Home() {
         <div className={styles.footerColumns}>
           <div>
             <div className={styles.logoBadge}>AT</div>
-          </div>
-          <div>
-            <h4>Navigation</h4>
-            <ul>
-              {["Home", "About", "Service", "Resume", "Project"].map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
           </div>
           <div>
             <h4>Contact</h4>
