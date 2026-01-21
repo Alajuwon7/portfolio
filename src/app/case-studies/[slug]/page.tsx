@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { use } from "react";
 import { notFound } from "next/navigation";
 
 import { caseStudies, getCaseStudy } from "@/data/caseStudies";
@@ -49,9 +48,8 @@ export async function generateMetadata(
   };
 }
 
-export default function CaseStudyPage(props: CaseStudyPageProps) {
-  const params = use(props.params);
-  const { slug } = params;
+export default async function CaseStudyPage(props: CaseStudyPageProps) {
+  const { slug } = await props.params;
   const study = getCaseStudy(slug);
 
   if (!study) {
@@ -60,7 +58,6 @@ export default function CaseStudyPage(props: CaseStudyPageProps) {
 
   const heroMeta = [
     { label: "Project Type", value: study.hero.projectType },
-    { label: "Year", value: study.hero.year },
     { label: "Version", value: study.hero.duration },
     { label: "Role", value: study.hero.role },
     ...(study.hero.platform ? [{ label: "Platform", value: study.hero.platform }] : []),
@@ -189,6 +186,8 @@ export default function CaseStudyPage(props: CaseStudyPageProps) {
         },
       ];
 
+  const isCDCCaseStudy = slug === "cdc-data-platform";
+
   return (
     <main className={styles.caseStudyPage}>
       <div className={styles.container}>
@@ -197,11 +196,16 @@ export default function CaseStudyPage(props: CaseStudyPageProps) {
           Back to portfolio
         </Link>
 
+        {isCDCCaseStudy && (
+          <div className={styles.caseDisclaimer}>
+            This case study reflects work completed as a employee for CTE Inc. Under contract for the Centers for Disease Control and Prevention (CDC) - NVSS/NCHS Division. Due to strict affidavit and NDA requirements, some artifacts and sensitive details have been omitted from this case study.
+          </div>
+        )}
+
         <section className={styles.heroSection}>
           <div className={styles.heroContent}>
             <p className={styles.heroEyebrow}>Case Study</p>
             <h1 className={styles.heroTitle}>{study.hero.title}</h1>
-            <p className={styles.heroSubtitle}>{study.hero.subtitle}</p>
 
             <div className={styles.heroMetaGrid}>
               {heroMeta.map(({ label, value }) => (
@@ -225,17 +229,6 @@ export default function CaseStudyPage(props: CaseStudyPageProps) {
               </div>
             ) : null}
 
-            {study.techStack ? (
-              <div className={styles.heroTools}>
-                <span className={styles.heroToolsLabel}>Tech Stack</span>
-                <div className={styles.heroTechStackList}>
-                  <span><strong>Frontend:</strong> {study.techStack.frontend}</span>
-                  <span><strong>Backend:</strong> {study.techStack.backend}</span>
-                  <span><strong>Language:</strong> {study.techStack.language}</span>
-                  <span><strong>State:</strong> {study.techStack.state}</span>
-                </div>
-              </div>
-            ) : null}
 
             {study.hero.client && (
               <div className={styles.heroClient}>
@@ -245,7 +238,7 @@ export default function CaseStudyPage(props: CaseStudyPageProps) {
             )}
           </div>
 
-          <HeroMedia image={study.hero.image} modal={heroModalContent} />
+          <HeroMedia image={study.hero.image} modal={heroModalContent} slug={slug} />
         </section>
 
         <section className={styles.overviewSection}>
@@ -317,7 +310,6 @@ export default function CaseStudyPage(props: CaseStudyPageProps) {
         <section className={styles.processSection}>
           <div className={styles.processHeader}>
             <p>Process &amp; Approach</p>
-            <h2>How we moved from crowdsourced chaos to confident decisions.</h2>
           </div>
 
           <div className={styles.processTimeline}>
@@ -424,6 +416,7 @@ export default function CaseStudyPage(props: CaseStudyPageProps) {
           />
         </section>
 
+        {isRushCaseStudy && (
         <section className={styles.decisionsSection}>
           <div className={styles.decisionsHeader}>
             <div>
@@ -487,6 +480,7 @@ export default function CaseStudyPage(props: CaseStudyPageProps) {
             ]}
           />
         </section>
+        )}
 
         {!isRushCaseStudy && (
         <section className={styles.resultsSection}>
@@ -547,8 +541,13 @@ export default function CaseStudyPage(props: CaseStudyPageProps) {
               <Link href="/#portfolio" className={styles.backLinkSecondary}>
                 Back to all projects
               </Link>
-              <Link href="/#contact" className={styles.primaryButton}>
-                Let’s Discuss
+              <Link 
+                href="https://www.linkedin.com/in/alajuwonthomas/" 
+                className={styles.primaryButton}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Let's Discuss
               </Link>
             </div>
           </div>

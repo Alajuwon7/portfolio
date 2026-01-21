@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 import type { CaseStudyHero } from "@/data/caseStudies";
@@ -14,31 +15,55 @@ type HeroMediaProps = {
     subtitle?: string;
     paragraphs: string[];
   };
+  slug: string;
 };
 
-export default function HeroMedia({ image, modal }: HeroMediaProps) {
+export default function HeroMedia({ image, modal, slug }: HeroMediaProps) {
   const [open, setOpen] = useState(false);
+  const isTruePeaks = slug === "true-peaks";
 
   return (
     <div className={styles.heroMedia}>
-      <button
-        type="button"
-        className={styles.heroMediaButton}
-        onClick={() => setOpen(true)}
-        aria-label="Open hero image details"
-      >
-        <div className={styles.heroImageFrame}>
-          <Image
-            src={image.src}
-            alt={image.alt}
-            width={image.width}
-            height={image.height}
-            priority
-            sizes="(max-width: 768px) 100vw, 640px"
-            className={styles.heroImage}
-          />
-        </div>
-      </button>
+      {isTruePeaks ? (
+        <Link
+          href="https://truepeaks.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.heroMediaButton}
+          aria-label="Visit True Peaks website"
+        >
+          <div className={styles.heroImageFrame}>
+            <Image
+              src={image.src}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+              priority
+              sizes="(max-width: 768px) 100vw, 640px"
+              className={styles.heroImage}
+            />
+          </div>
+        </Link>
+      ) : (
+        <button
+          type="button"
+          className={styles.heroMediaButton}
+          onClick={() => setOpen(true)}
+          aria-label="Open hero image details"
+        >
+          <div className={styles.heroImageFrame}>
+            <Image
+              src={image.src}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+              priority
+              sizes="(max-width: 768px) 100vw, 640px"
+              className={styles.heroImage}
+            />
+          </div>
+        </button>
+      )}
 
       {open && (
         <div

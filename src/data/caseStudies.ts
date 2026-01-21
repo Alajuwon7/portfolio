@@ -102,6 +102,7 @@ export type CaseStudy = {
     backend: string;
     language: string;
     state: string;
+    other?: string;
   };
   navigation: {
     previous?: {
@@ -113,7 +114,7 @@ export type CaseStudy = {
       title: string;
     };
   };
-  keyDecisions: Array<{
+  keyDecisions?: Array<{
     title: string;
     context: string;
     options: string;
@@ -846,6 +847,10 @@ export const caseStudies: CaseStudy[] = [
         slug: "cdc-data-platform",
         title: "CDC Data Modernization Dashboard",
       },
+      next: {
+        slug: "true-peaks",
+        title: "True Peaks: Modern Online Booking Platform",
+      },
     },
     keyDecisions: [
       {
@@ -870,6 +875,234 @@ export const caseStudies: CaseStudy[] = [
         outcome: "Usable even when the network dropped during boarding.",
       },
     ],
+  },
+  {
+    slug: "true-peaks",
+    hero: {
+      title: "True Peaks: From Paper-Based Operations to a Secure, Data-Driven Platform",
+      subtitle:
+        "Modernized booking, client portals, and real-time dashboards—cutting reporting from 3 days to instant while improving recommendation accuracy from 68% to 93%.",
+      image: {
+        src: "https://res.cloudinary.com/kingaat7/image/upload/v1768870204/TPHero2_ylaumc.png",
+        alt: "True Peaks booking platform dashboard and client portal",
+        width: 1536,
+        height: 1125,
+      },
+      projectType: "Client Dashboard",
+      year: "2024",
+      duration: "(v1.0)",
+      role: "Assistant UX Developer",
+      platform: "Web App",
+      modal: {
+        title: "True Peaks Overview",
+        subtitle: "Purpose",
+        paragraphs: [
+          "True Peaks modernized a paper-based booking system into a secure, data-driven platform with client portals and real-time dashboards.",
+          "The platform streamlines operations, reduces reporting time from 3 days to instant, and improves recommendation accuracy significantly.",
+        ],
+      },
+    },
+    toolsUsed: ["Figma", "FigJam", "GitHub", "LLM", "Supabase"],
+    techStack: {
+      frontend: "Web app stack",
+      backend: "Secure authentication pipeline, role-based access controls",
+      language: "TypeScript",
+      state: "N/A",
+      other: "Reporting dashboard + PDF generation module",
+    },
+    overview: {
+      challenge:
+        "True Peaks is a drug/alcohol testing services company that relied on paper-based workflows for appointments and blood draws, which caused lost documents, inconsistent processes, and slow reporting that limited leadership's ability to manage performance and scale.",
+      role:
+        "As the UX Researcher, I mapped end-to-end workflows across owner/admin/dispatcher roles, validated operational pain points, and translated them into requirements for a modern platform that centralized scheduling, a blood draw log (replacing manual file sorting with clickable agency records), real-time dashboards for volume and peak-hour insights, and one-click PDF generation/download for recordkeeping. As the Assistant UX Developer, I supported the implementation of core UI flows and reporting interactions while helping introduce a secure, compliant access pattern after discovering admins were emailing vulnerable PDFs—addressed through an authentication pipeline using officer-number verification and role-based permissions to protect sensitive data while preserving usability.",
+      outcome: {
+        stat: "40+",
+        label: "Contracts Managed Online",
+        description:
+          "The result was a scalable, data-driven system that eliminated manual entry, delivered instant reporting, improved recommendation accuracy, and enabled management of 40+ contracts online across multiple counties without increasing headcount.",
+      },
+    },
+    problem: {
+      title: "Paper-based workflows created operational bottlenecks and security risks",
+      context: [
+        "As the UX Researcher, I found that True Peaks' core operations ran on a paper-based workflow for appointments and blood draws, which led to lost documents, inconsistent processing, and downstream customer satisfaction issues.",
+        "Reporting was also highly manual—stakeholders couldn't reliably see daily volume, peak hours, top agencies, or phlebotomist performance without time-consuming effort.",
+        "A separate (and urgent) risk surfaced during research: admin users were emailing PDFs containing sensitive information, creating a compliance/security exposure tied to CLIA expectations.",
+      ],
+    },
+    process: {
+      steps: [
+        {
+          title: "Step 01 — Client Journey Mapping & Discovery",
+          description:
+            "As part of the discovery phase, I created a client journey map to visualize the current experience, identify pain points, and uncover opportunities for improvement. This guided design decisions throughout the transformation project by mapping the end-to-end client journey from awareness through follow-up and reporting.",
+          gallery: [
+            {
+              src: "https://res.cloudinary.com/kingaat7/image/upload/v1768849592/TPMap_vnfbki.png",
+              alt: "Client Journey Map showing stages from Awareness through Follow-Up & Reporting with current experience, pain points, customer emotions, and opportunities",
+              width: 1920,
+              height: 856,
+            },
+          ],
+          extraDetails: [
+            {
+              heading: "Journey Map Stages",
+              items: [
+                "Stage: Awareness — Client hears about the business through word-of-mouth or local ads. Pain Points: Low clarity on offerings. Opportunities: Provide clear service listings online.",
+                "Stage: Consideration — Client calls or visits to inquire. Pain Points: Inconsistent info sharing. Opportunities: Centralized info hub & FAQ on website.",
+                "Stage: Appointment Booking — Manual scheduling via phone or in person. Pain Points: Time-consuming, prone to errors. Opportunities: Online booking system with confirmations.",
+                "Stage: Intake Process — Manual form filling during visit. Pain Points: Data entry delays, repetitive questions. Opportunities: Digital intake forms with pre-fill options.",
+                "Stage: Service Delivery — Service provided as scheduled. Pain Points: Limited personalization. Opportunities: Use intake data to personalize services.",
+                "Stage: Follow-Up & Reporting — Reports prepared manually days later. Pain Points: Slow turnaround. Opportunities: Automated reporting & client portal access.",
+              ],
+            },
+          ],
+        },
+        {
+          title: "Step 02 — Solution: Modern, data-driven platform with secure access",
+          description:
+            "Delivered a modern, data-driven platform that replaced paper processes with a centralized system: a blood draw tracking + reporting dashboard (showing volume by day and peak times), a clickable agency-based log to replace file sorting, and instant PDF generation/download for recordkeeping. To address compliance risk while maintaining usability, the solution introduced a secure authentication pipeline for sensitive data access (link-based access with officer-number verification) paired with a role-based permission hierarchy (Owner/Admin/Dispatcher), enabling controlled access and real-time operational visibility without slowing teams down.",
+          gallery: [
+            {
+              src: "https://res.cloudinary.com/kingaat7/image/upload/v1768854369/TPLogin_cy0xi2.png",
+              alt: "True Peaks login screen with secure authentication",
+              width: 1440,
+              height: 840,
+            },
+          ],
+        },
+      ],
+    },
+    designShowcase: {
+      images: [
+        {
+          id: "tp-cover",
+          category: "Hi-fi",
+          caption: "True Peaks platform overview showing modernized booking and client portal features.",
+          image: {
+            src: "https://res.cloudinary.com/kingaat7/image/upload/v1768836312/3_bztbnw.png",
+            alt: "True Peaks case study cover",
+            width: 1440,
+            height: 840,
+          },
+        },
+        {
+          id: "tp-login",
+          category: "Hi-fi",
+          caption: "Secure login screen with officer-number verification and role-based access controls",
+          image: {
+            src: "https://res.cloudinary.com/kingaat7/image/upload/v1768854369/TPLogin_cy0xi2.png",
+            alt: "True Peaks login screen",
+            width: 1440,
+            height: 840,
+          },
+        },
+        {
+          id: "tp-dashboard-home",
+          category: "Hi-fi",
+          caption: "Dashboard home view showing real-time volume metrics, peak hours, and agency-based tracking",
+          image: {
+            src: "https://res.cloudinary.com/kingaat7/image/upload/v1768859460/TP-Dashboard_v420jd.png",
+            alt: "True Peaks dashboard home view",
+            width: 1920,
+            height: 1080,
+          },
+        },
+        {
+          id: "tp-dashboard-2",
+          category: "Hi-fi",
+          caption: "Additional dashboard view with detailed metrics and reporting features",
+          image: {
+            src: "https://res.cloudinary.com/kingaat7/image/upload/v1768859460/TP-Dashboard2_s0t8tc.png",
+            alt: "True Peaks dashboard view 2",
+            width: 1920,
+            height: 1080,
+          },
+        },
+        {
+          id: "tp-before-modal",
+          category: "Hi-fi",
+          caption: "Interface state before modal reveals detailed information.",
+          image: {
+            src: "https://res.cloudinary.com/kingaat7/image/upload/v1768859460/TP-BeforeModal_sqg65q.png",
+            alt: "True Peaks before modal state",
+            width: 1920,
+            height: 1080,
+          },
+        },
+        {
+          id: "tp-modal",
+          category: "Hi-fi",
+          caption: "Modal interface for detailed information and actions",
+          image: {
+            src: "https://res.cloudinary.com/kingaat7/image/upload/v1768859460/TP-Modal_qen9rk.png",
+            alt: "True Peaks modal interface",
+            width: 1920,
+            height: 1080,
+          },
+        },
+        {
+          id: "tp-map",
+          category: "Hi-fi",
+          caption: "Client journey diagram",
+          image: {
+            src: "https://res.cloudinary.com/kingaat7/image/upload/v1768859459/TPMap_maup5f.png",
+            alt: "True Peaks map view",
+            width: 1920,
+            height: 1080,
+          },
+        },
+        {
+          id: "tp-screenshot",
+          category: "Hi-fi",
+          caption: "Client journey map to visualize the current experience, identify pain points, and uncover opportunities for improvement.",
+          image: {
+            src: "https://res.cloudinary.com/kingaat7/image/upload/v1768860257/Screenshot_2026-01-19_at_5.03.20_PM_pomsqn.png",
+            alt: "True Peaks platform screenshot",
+            width: 1920,
+            height: 1080,
+          },
+        },
+      ],
+    },
+    results: {
+      metrics: [
+        {
+          value: "3 days → Instant",
+          label: "Reporting turnaround",
+          description: "Cut reporting time from 3 days to instant with automated PDF generation and real-time dashboards.",
+        },
+        {
+          value: "68% → 93%",
+          label: "Recommendation accuracy",
+          description: "Improved recommendation accuracy from 68% to 93% through data-driven insights.",
+        },
+        {
+          value: "40+",
+          label: "Contracts managed online",
+          description: "Enabled management of 40+ contracts online across multiple counties without increasing headcount.",
+        },
+        {
+          value: "100%",
+          label: "Security compliance",
+          description: "Eliminated vulnerable PDF emailing with secure authentication pipeline and role-based access controls.",
+        },
+        {
+          value: "0 lost documents",
+          label: "Document management",
+          description: "Replaced paper-based workflows with digital tracking, eliminating lost documents and inconsistent processing.",
+        },
+      ],
+    },
+    learnings: {
+      takeaways: [],
+    },
+    navigation: {
+      previous: {
+        slug: "rush-the-line",
+        title: "Rush The Line — Airport Companion",
+      },
+    },
   },
 ];
 

@@ -41,8 +41,7 @@ const experiences = [
     company: "CTE Inc./CDC (NVSS/NCHS Division)",
     period: "March 2022 – October 2025",
     role: "Lead Product Designer",
-    details:
-      "Led the end‑to‑end redesign of PowerApps dashboards."
+    details: "Led the end‑to‑end redesign of PowerApps dashboards.",
   },
   {
     company: "Canstudy Consulting Ltd. ",
@@ -56,22 +55,31 @@ const experiences = [
     period: "February 2018 – January 2022",
     role: "UX/UI Designer & Researcher",
     details:
-      "Crafted cohesive user experiences and flows that streamline operations for airport personnel."
+      "Crafted cohesive user experiences and flows that streamline operations for airport personnel.",
   },
 ];
 
 const portfolioProjects = [
   {
-    title: "Lirante — Food Delivery Solution",
+    title: "NKMS: Data Modernization Dashboard",
     summary:
       "A glassmorphism inspired design system for a premium food delivery experience.",
     slug: "cdc-data-platform",
+    image: "https://res.cloudinary.com/kingaat7/image/upload/v1768836312/2_h1kbcm.png",
   },
   {
-    title: "Travel Feed — Airport Companion",
+    title: "Rush The Line: Designing Calm in Chaos (Mobile App)",
     summary:
       "A gamified mobile companion that reduces line anxiety with delightful UI.",
     slug: "rush-the-line",
+    image: "https://res.cloudinary.com/kingaat7/image/upload/v1768836312/1_yzbrhu.png",
+  },
+  {
+    title: "True Peaks: Modern Online Booking Platform",
+    summary:
+      "A gamified mobile companion that reduces line anxiety with delightful UI.",
+    slug: "true-peaks",
+    image: "https://res.cloudinary.com/kingaat7/image/upload/v1768836312/3_bztbnw.png",
   },
 ];
 
@@ -115,9 +123,8 @@ const expertiseMarquee = [
 const navItems = [
   { label: "Home", target: "home" },
   { label: "About", target: "about" },
-  { label: "Service", target: "services" },
-  { label: "Resume", target: "experience" },
-  { label: "Project", target: "portfolio" },
+  { label: "Resume", target: "resume" },
+  { label: "Case Studies", target: "portfolio" },
   { label: "Contact", target: "contact" },
 ];
 
@@ -135,6 +142,16 @@ export default function Home() {
 
   const handleNavClick = useCallback(
     (target: string) => {
+      if (target === "resume") {
+        if (typeof window !== "undefined") {
+          window.open(
+            "https://docs.google.com/document/d/1uKC4DwUgvH6eka-Xib1VkWlqszFX0CyDxlYHRZvu5oA/edit?usp=sharing",
+            "_blank",
+            "noopener,noreferrer"
+          );
+        }
+        return;
+      }
       setActiveNav(target);
       scrollToSection(target);
     },
@@ -177,7 +194,7 @@ export default function Home() {
     if (response === null) return;
 
     if (Number(response.trim()) === correctAnswer) {
-      window.location.href = `mailto:${emailAddress}`;
+      window.alert(`Email: ${emailAddress}`);
     } else {
       window.alert("Oops, try the math problem again to verify you're human.");
     }
@@ -403,6 +420,42 @@ export default function Home() {
         </div>
       </section>
 
+      <section className={styles.aboutSection} id="about">
+        <div className={styles.aboutGrid}>
+          <div className={styles.aboutImage}>
+            <Image
+              src={aboutPortrait}
+              alt="About portrait"
+              loading="lazy"
+              width={620}
+              height={520}
+            />
+          </div>
+          <div className={styles.aboutContent}>
+            <p className={styles.sectionLabel}>About me</p>
+            <h2>
+              About <span>Me</span>
+            </h2>
+            <p>
+            I'm a Product Designer and UX Developer who loves turning real-world problems into digital experiences that feel simple, fast, and trustworthy. Over the last 9 years, I've worked across government, education, and travel tech—using research, clear interaction design, and hands-on UI development to move products from idea → usable → measurable.
+            </p>
+            <p>
+            I've also always been close to the "why" behind technology. In 2017, I taught a kids coding bootcamp and later led STEM days for elementary and middle schools—teaching 1st through 8th graders Scratch, HTML, CSS, and JavaScript (usually 12–21 students per class). That work stuck with me, and today I'm on the vendor list to teach STEM days for Carroll County Schools.
+            </p>
+            <p>
+            On the product side, I like validating ideas in the real world, not just in a deck. In 2021, I built a mobile food delivery app and ran a pilot at ATL—supporting flight attendants, CLEAR staff, and gate agents—fulfilling 80 orders and even receiving exclusive access across the airport through a CIDA badge granted by a concessions group GM. In 2022, I won the Dell for Startups pitch event and a $10,000 prize, which reinforced something I already believed: when you pair strong user insight with solid execution, people notice.
+            </p>
+            <button
+              type="button"
+              className={styles.outlineButton}
+              onClick={() => scrollToSection("contact")}
+            >
+              Contact me
+            </button>
+          </div>
+        </div>
+      </section>
+
       <section className={styles.experienceSection} id="experience">
         <div className={styles.sectionHeader}>
           <p>Career Journey</p>
@@ -439,57 +492,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.aboutSection} id="about">
-        <div className={styles.aboutGrid}>
-          <div className={styles.aboutImage}>
-            <Image
-              src={aboutPortrait}
-              alt="About portrait"
-              loading="lazy"
-              width={620}
-              height={520}
-            />
-          </div>
-          <div className={styles.aboutContent}>
-            <p className={styles.sectionLabel}>About me</p>
-            <h2>
-              About <span>Me</span>
-            </h2>
-            <p>
-            User-centered Product Designer and UX Developer with 6+ years of experience delivering high-impact digital products 
-            through user research, interaction design, and cross-functional collaboration, managing concurrent contract engagements 
-            across government, education, and travel technology sectors. Proven track record of improving user satisfaction, 
-            conversion rates, and operational efficiency through data-driven design decisions and iterative usability testing. 
-            Expertise in designing accessible, responsive interfaces and design systems for government, SaaS, and consumer applications. 
-            Skilled in Agile methodologies, stakeholder management, and translating complex requirements into 
-            intuitive user experiences that drive measurable business outcomes.
-            </p>
-            <button
-              type="button"
-              className={styles.outlineButton}
-              onClick={() => scrollToSection("contact")}
-            >
-              Contact me
-            </button>
-          </div>
-        </div>
-      </section>
-
       <section className={styles.portfolioSection} id="portfolio">
         <div className={styles.portfolioHeader}>
           <div>
             <p className={styles.sectionLabel}>Case Studies</p>
             <h2>
-              Let’s have a look at my <span>Portfolio</span>
+              Let's have a look at my <span>Projects</span>
             </h2>
           </div>
-          <button
-            type="button"
-            className={styles.primaryButton}
-            onClick={() => scrollToSection("portfolio")}
-          >
-            See all
-          </button>
         </div>
         <div className={styles.portfolioGrid}>
           {portfolioProjects.map((project) => (
@@ -500,7 +510,7 @@ export default function Home() {
             >
               <div className={styles.portfolioImage}>
                 <Image
-                  src={portfolioVisual}
+                  src={project.image}
                   alt={project.title}
                   loading="lazy"
                   width={720}
@@ -530,11 +540,6 @@ export default function Home() {
               Send
             </button>
           </form>
-          <div className={styles.ctaBadges}>
-            <span>4.9/5 Average Ratings</span>
-            <span>25+ Winning Awards</span>
-            <span>Certified Product Designer</span>
-          </div>
         </div>
       </section>
 
@@ -564,17 +569,39 @@ export default function Home() {
           </div>
           <div>
             <h4>Contact</h4>
-            <ul>
-              <li>+1 (555) 987-1234</li>
-              <li>hello@alajuwon.design</li>
-              <li>@alajuwon.design</li>
-            </ul>
+            <div className={styles.heroSocialIcons}>
+              <a
+                className={styles.heroSocialButton}
+                href="https://www.linkedin.com/in/alajuwonthomas/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn profile"
+              >
+                <LinkedInIcon />
+              </a>
+              <a
+                className={styles.heroSocialButton}
+                href="https://github.com/Alajuwon"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub profile"
+              >
+                <GitHubIcon />
+              </a>
+              <button
+                type="button"
+                className={styles.heroSocialButton}
+                onClick={handleEmailClick}
+                aria-label="Email me"
+              >
+                <MailIcon />
+              </button>
+            </div>
           </div>
         </div>
         <div className={styles.footerDivider} />
         <div className={styles.footerBottom}>
           <span>© {new Date().getFullYear()} Alajuwon. All rights reserved.</span>
-          <span>User Terms &amp; Privacy Policy</span>
         </div>
       </footer>
     </main>

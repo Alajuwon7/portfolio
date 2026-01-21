@@ -35,7 +35,7 @@
 .heroEyebrow {
   text-transform: uppercase;
   font-size: 0.85rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   color: var(--color-primary);
 }
 
@@ -163,6 +163,12 @@
   border-radius: var(--radius-xl);
 }
 
+.heroMediaButton:hover {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-xl);
+}
+
 .heroMediaButton:hover .heroImageFrame {
   transform: translateY(-4px);
   box-shadow: 0 40px 80px rgba(15, 23, 42, 0.22);
@@ -265,7 +271,7 @@
 .overviewEyebrow {
   text-transform: uppercase;
   font-size: 0.85rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   color: var(--color-primary);
 }
 
@@ -1315,7 +1321,7 @@
 
 .resultsHeader p {
   text-transform: uppercase;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   color: var(--color-primary);
   font-size: 0.8rem;
 }
@@ -1328,9 +1334,13 @@
 }
 
 .resultsMetrics {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex;
+  flex-direction: row;
   gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
 }
 
 .metricCard {
@@ -1341,6 +1351,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  flex: 0 0 auto;
+  min-width: 240px;
+  max-width: 280px;
 }
 
 .metricValue {
@@ -1474,6 +1487,10 @@
 .navArrowButton {
   width: 114px;
   height: 114px;
+  min-width: 114px;
+  min-height: 114px;
+  flex-shrink: 0;
+  flex-grow: 0;
   border-radius: 50%;
   background: #0f0f1b;
   color: #fff;
@@ -1519,18 +1536,19 @@
 }
 
 .primaryButton {
-  background: var(--color-primary);
-  color: #fff;
   border: none;
-  border-radius: 60px;
-  padding: 1rem 2.5rem;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
+  color: #fff;
+  padding: 0.95rem 2rem;
+  border-radius: 999px;
   font-weight: 600;
+  cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .primaryButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 30px rgba(253, 133, 58, 0.35);
+  box-shadow: 0 12px 25px rgba(253, 133, 58, 0.35);
 }
 
 .backLink {
@@ -1594,7 +1612,7 @@
   }
 
   .diagramArrow {
-    justify-self: flex-start;
+    display: none;
   }
 
   .processTimeline {

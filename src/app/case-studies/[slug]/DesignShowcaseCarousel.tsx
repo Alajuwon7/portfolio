@@ -1241,29 +1241,29 @@ function LegacyCarousel({ slides }: { slides: ShowcaseSlide[] }) {
             </button>
 
             <div className={styles.stepGalleryModalImageFrame}>
-              {activeIsVideo ? (
-                <video
-                  controls
-                  playsInline
-                  preload="metadata"
-                  poster={activeSlide.image.src}
-                  className={styles.stepGalleryModalImage}
-                  src={activeSlide.video}
-                />
-              ) : (
-                <Image
-                  src={activeSlide.image.src}
-                  alt={activeSlide.image.alt}
-                  width={activeSlide.image.width}
-                  height={activeSlide.image.height}
-                  sizes="(max-width: 1024px) 100vw, 1100px"
-                  className={styles.stepGalleryModalImage}
-                  style={{
-                    transform: `scale(${zoom})`,
-                    transformOrigin: "center",
-                  }}
-                />
-              )}
+            {activeIsVideo ? (
+              <video
+                controls
+                playsInline
+                preload="metadata"
+                poster={activeSlide.image.src}
+                className={styles.stepGalleryModalImage}
+                src={activeSlide.video}
+              />
+            ) : (
+              <Image
+                src={activeSlide.image.src}
+                alt={activeSlide.image.alt}
+                width={activeSlide.image.width}
+                height={activeSlide.image.height}
+                sizes="(max-width: 1024px) 100vw, 1100px"
+                className={styles.stepGalleryModalImage}
+                style={{
+                  transform: `scale(${zoom})`,
+                  transformOrigin: "center",
+                }}
+              />
+            )}
             </div>
 
             <div className={styles.stepGalleryModalControls}>
@@ -1298,43 +1298,43 @@ function LegacyCarousel({ slides }: { slides: ShowcaseSlide[] }) {
                 )}
               </div>
 
-              {!activeIsVideo && (
-                <div className={styles.stepGalleryModalZoom}>
-                  <button
-                    type="button"
-                    onClick={zoomOut}
-                    className={styles.stepGalleryModalZoomButton}
-                    aria-label="Zoom out"
-                  >
-                    −
-                  </button>
-                  <span className={styles.stepGalleryModalZoomLabel}>
-                    {Math.round(zoom * 100)}%
-                  </span>
-                  <button
-                    type="button"
-                    onClick={zoomIn}
-                    className={styles.stepGalleryModalZoomButton}
-                    aria-label="Zoom in"
-                  >
-                    +
-                  </button>
-                </div>
-              )}
+            {!activeIsVideo && (
+              <div className={styles.stepGalleryModalZoom}>
+                <button
+                  type="button"
+                  onClick={zoomOut}
+                  className={styles.stepGalleryModalZoomButton}
+                  aria-label="Zoom out"
+                >
+                  −
+                </button>
+                <span className={styles.stepGalleryModalZoomLabel}>
+                  {Math.round(zoom * 100)}%
+                </span>
+                <button
+                  type="button"
+                  onClick={zoomIn}
+                  className={styles.stepGalleryModalZoomButton}
+                  aria-label="Zoom in"
+                >
+                  +
+                </button>
+              </div>
+            )}
             </div>
 
             <footer className={styles.stepGalleryModalFooter}>
-              <p className={styles.stepGalleryModalCaption}>{activeSlide.caption}</p>
-              {activeSlide.link && (
-                <a
-                  href={activeSlide.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.stepGalleryInlineLink}
-                >
-                  Open in Figma ↗
-                </a>
-              )}
+            <p className={styles.stepGalleryModalCaption}>{activeSlide.caption}</p>
+            {activeSlide.link && (
+              <a
+                href={activeSlide.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.stepGalleryInlineLink}
+              >
+                Open in Figma ↗
+              </a>
+            )}
             </footer>
           </div>
         </div>

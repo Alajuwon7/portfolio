@@ -46,6 +46,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .navButton:hover {
@@ -53,11 +54,29 @@
   transform: translateY(-1px);
 }
 
+.navButton:active,
+.navButton:focus {
+  color: var(--color-primary);
+  outline: none;
+}
+
+.navButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .navButtonActive {
   background: var(--color-primary);
-  color: #fff;
+  color: #fff !important;
   font-weight: 600;
   box-shadow: 0 10px 25px rgba(253, 133, 58, 0.4);
+}
+
+.navButtonActive:hover,
+.navButtonActive:active,
+.navButtonActive:focus {
+  color: #fff !important;
+  background: var(--color-primary);
 }
 
 .navBrand {
@@ -623,6 +642,28 @@
     align-items: flex-start;
   }
 
+  .serviceHighlights {
+    flex-direction: column;
+    overflow-x: visible;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .serviceHighlights article {
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .serviceHighlightCard {
+    padding: 1.5rem 1.25rem 2.5rem;
+    border-radius: 1.5rem;
+  }
+
+  .serviceHighlightTop h3 {
+    font-size: 1.35rem;
+  }
+
 .marqueeSection {
   margin: 4rem 0;
   background: #f0f0f0;
@@ -1154,6 +1195,10 @@
   }
 
   .timelineCol {
+    display: none;
+  }
+
+  .serviceSliderNav {
     display: none;
   }
 }
