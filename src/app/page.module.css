@@ -1201,4 +1201,8 @@
   .serviceSliderNav {
     display: none;
   }
+
+  .experienceRole p {
+    display: none;
+  }
 }

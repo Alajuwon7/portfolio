@@ -40,7 +40,7 @@ const experiences = [
   {
     company: "CTE Inc./CDC (NVSS/NCHS Division)",
     period: "March 2022 – October 2025",
-    role: "Lead Product Designer",
+    role: "Lead UX Designer",
     details: "Led the end‑to‑end redesign of PowerApps dashboards.",
   },
   {
