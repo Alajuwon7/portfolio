@@ -519,7 +519,6 @@ export default function Home() {
               </div>
               <div className={styles.portfolioBody}>
                 <h3>{project.title}</h3>
-                <p>{project.summary}</p>
               </div>
             </Link>
           ))}
