@@ -1,0 +1,35 @@
+---
+alwaysApply: false
+---
+
+## ANALYZE
+Analyze the image or screenshot pasted by the user.
+
+## OBJECTIVE
+Extract a comprehensive and reusable design system from the image provided, excluding any specific textual or visual content. The goal is to create a JSON reference that developers or AI agents can use as a styling foundation for consistent UI development.
+
+## INSTRUCTIONS
+1. Examine the image to extract the following design system primitives:
+   - Color schemes (hex, rgba, or Tailwind-like tokens)
+   - Font hierarchies (font families, sizes, weights, line-heights)
+   - Spacing and margin conventions (paddings, spacing scales)
+   - Structural layouts (grid systems, card components, wrappers)
+   - Interactive element styles (buttons, form inputs, hover states)
+   - Visual treatments (shadows, corner radii, gradients, overlays)
+
+2. Format this information into a structured JSON file:
+   - Include top-level keys: `colors`, `typography`, `spacing`, `layout`, `components`, `effects`
+   - Use developer-friendly, reusable tokens and naming conventions
+
+3. Output a file named:  
+   `designs/design.json`  
+   (Create the `designs/` folder if it doesn’t exist.)
+
+## REQUIREMENTS
+- Do **not** copy UI content (e.g., images, text) — extract only style primitives
+- Ensure all tokens are scalable and reusable across devices
+- Structure the JSON to support use in Tailwind, Figma Tokens, or CSS-in-JS workflows
+- Record component variations and interaction states where visible
+- Follow contemporary design system best practices
+- Omit any literal text, imagery, or data from source screenshots
+- Create framework-independent output suitable for any implementation environment

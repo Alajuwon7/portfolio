@@ -1,0 +1,14 @@
+---
+alwaysApply: false
+---
+
+// Add to .cursorrules or project context:
+/*
+Use designSystem.json for all styling decisions:
+- Colors from colorSystem.palette
+- Typography from typography.scale
+- Spacing from spacing.scale
+- Components follow components[componentName] structure
+- Apply glassmorphism effects as specified
+- Maintain responsive breakpoints
+*/
