@@ -14,6 +14,7 @@ export type ShowcaseSlide = {
   link?: string;
   video?: string;
   hiFiSrc?: string;
+  hiFiAlt?: string;
   hiFiCaption?: string;
   image: {
     src: string;
@@ -1390,6 +1391,7 @@ export default function DesignShowcaseCarousel({
             image: {
               ...slide.image,
               src: slide.hiFiSrc ?? slide.image.src,
+              alt: slide.hiFiAlt ?? slide.image.alt,
             },
           }));
 
