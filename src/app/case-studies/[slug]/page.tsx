@@ -238,7 +238,7 @@ export default async function CaseStudyPage(props: CaseStudyPageProps) {
             )}
           </div>
 
-          <HeroMedia image={study.hero.image} modal={heroModalContent} slug={slug} />
+          <HeroMedia image={study.hero.image} modal={heroModalContent} />
         </section>
 
         <section className={styles.overviewSection}>
