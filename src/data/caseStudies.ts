@@ -11,6 +11,7 @@ export type CaseStudyHero = {
   projectType: string;
   year: string;
   duration: string;
+  durationLabel?: string;
   role: string;
   platform?: string;
   client?: {
@@ -76,6 +77,7 @@ export type CaseStudy = {
       link?: string;
       video?: string;
       hiFiSrc?: string;
+      hiFiAlt?: string;
       hiFiCaption?: string;
       image: CaseStudyHero["image"];
     }>;
@@ -179,7 +181,7 @@ export const caseStudies: CaseStudy[] = [
       ],
     },
     },
-    toolsUsed: ["Figma", "FigJam", "PowerBi", "Sharepoint database"],
+    toolsUsed: ["Figma", "FigJam", "Power BI", "SharePoint database"],
     overview: {
       challenge:
         "The NVSS/NCHS needed a centralized dashboard to track 57 jurisdictions’ progress toward FHIR certification, but the landscape was chaotic. Certification guidance across the six stages was still in flux, state-level leadership turnover left new VRO staff unsure of their true status, and many jurisdictions relied on vendors to kick off pre-certification steps—creating critical visibility gaps. The team required a single source of truth to understand where each jurisdiction stood and who needed targeted outreach.",
@@ -204,7 +206,7 @@ export const caseStudies: CaseStudy[] = [
       },
       supportingImage: {
         src: "https://res.cloudinary.com/kingaat7/image/upload/v1764239406/Canstudy_Posts_hzgm1j.png",
-        alt: "Heatmap showing inconsistent jurisdiction dashboards",
+        alt: "Portrait of Alajuwon Thomas",
         width: 1280,
         height: 720,
       },
@@ -229,7 +231,7 @@ export const caseStudies: CaseStudy[] = [
                 "Conducted 12 stakeholder interviews across NCHS leadership, ELC coordinators, and data analysts",
                 "Facilitated 3 ELC breakout sessions with jurisdiction representatives during testing events",
                 "Documented 47 pain points in the existing workflow through screen recordings and user walkthroughs",
-                "Mapped information flow across 4 disconnected tracking systems",
+                "Mapped information flow across 5 disconnected tracking systems",
               ],
             },
             {
@@ -510,17 +512,11 @@ export const caseStudies: CaseStudy[] = [
             "Replaced fragmented tracking across 5 disconnected tools with single dashboard.",
         },
       ],
-      testimonial: {
-        quote:
-          "The redesigned NVSS dashboards turned our data into decisions. We no longer waste cycles debating whose numbers are right.",
-        author: "Dr. Eunice Carter",
-        role: "Director, CDC NVSS",
-      },
     },
     learnings: {
       takeaways: [
         "Pairing PowerApps engineers with epidemiologists early uncovered platform constraints before they blocked our sprint goals.",
-        "We needed a shared taxonomy workstream to keep design critique actionable across 50 jurisdictions.",
+        "We needed a shared taxonomy workstream to keep design critique actionable across 57 jurisdictions.",
         "In-product validation tips earn more trust than external documentation because analysts see guidance in the moment of doubt.",
       ],
       differently: [
@@ -578,13 +574,14 @@ export const caseStudies: CaseStudy[] = [
         "A mobile app that calms airport anxiety with live queue insights, proactive alerts, and guided checklists for time-sensitive travelers.",
       image: {
         src: "https://res.cloudinary.com/kingaat7/image/upload/v1766802730/_Posts_enirvr.png",
-        alt: "Mobile app screens showing airport companion flows",
+        alt: "Rush The Line promo graphic showing the app sign-in screen with callouts for live wait times, smart routing, and real-time travel insights",
         width: 1536,
         height: 1125,
       },
       projectType: "Consumer Mobile App",
       year: "2024–2025",
-      duration: "(v10.0 Beta Phase)",
+      duration: "Live on the App Store",
+      durationLabel: "Status",
       role: "Lead Product Designer",
       platform: "iOS/Android",
       modal: {
@@ -606,7 +603,7 @@ export const caseStudies: CaseStudy[] = [
         stat: "",
         label: "",
         description:
-          "RTL is in beta now, launching the full pilot in March 2026. Early testing shows users making critical decisions in under 8 seconds, and confidence in crowdsourced data jumped from 3.8 to 4.6 out of 5 after we introduced transparency features.",
+          "RTL is now live on the App Store. Early testing shows users making critical decisions in under 10 seconds, and confidence in crowdsourced data jumped from 3.8 to 4.6 out of 5 after we introduced transparency features.",
       },
     },
     techStack: {
@@ -621,11 +618,11 @@ export const caseStudies: CaseStudy[] = [
       quote: {
         text: "By the time I saw the gate change, I had already sprinted to the wrong end of the terminal.",
         author: "Frequent flier",
-        role: "Pilot test participant",
+        role: "Test participant",
       },
       supportingImage: {
         src: "https://res.cloudinary.com/kingaat7/image/upload/v1766802730/_Posts_enirvr.png",
-        alt: "Three mobile screens showing control panel, room devices, and lighting",
+        alt: "Rush The Line promo graphic showing the app sign-in screen with callouts for live wait times, smart routing, and real-time travel insights",
         width: 1536,
         height: 1125,
       },
@@ -658,7 +655,7 @@ export const caseStudies: CaseStudy[] = [
         {
           title: "Step 02 — Information architecture & design patterns",
           description:
-            'Designed a layered IA where the most critical question—"Am I on track?"—gets answered in under 6 seconds via a persistent Decision Cockpit card. Built progressive disclosure patterns for drill-down decisions.',
+            'Designed a layered IA where the most critical question—"Am I on track?"—gets answered in under 10 seconds via a persistent Decision Cockpit card. Built progressive disclosure patterns for drill-down decisions.',
           gallery: [
             {
               src: "https://res.cloudinary.com/kingaat7/image/upload/v1767089387/IA_PrincBackground_Shadow_uzlv8f.png",
@@ -717,6 +714,7 @@ export const caseStudies: CaseStudy[] = [
             height: 900,
           },
           hiFiSrc: "/Splash2.png",
+          hiFiAlt: "Rush The Line welcome splash screen with the gradient R logo and tagline",
           hiFiCaption:
             "Welcome splash screen introduces Rush The Line with the app logo and tagline. The gradient-styled 'R' logo with motion lines communicates speed and efficiency, setting the tone for a travel companion that helps users move through airports quickly.",
         },
@@ -724,7 +722,7 @@ export const caseStudies: CaseStudy[] = [
           id: "rtl-home-decision-cockpit",
           category: "Low-Fi",
           caption:
-            'Decision Cockpit — All critical information in one glanceable view. No menu diving. Users answer "Am I on track?" in under 3 seconds, addressing the #1 pain point from pre-pilot research: uncertainty in unfamiliar airports.',
+            'Decision Cockpit — All critical information in one glanceable view. No menu diving. Users answer "Am I on track?" in under 10 seconds, addressing the #1 pain point from early research: uncertainty in unfamiliar airports.',
           image: {
             src: createPlaceholderImage("Decision Cockpit Screen"),
             alt: "Decision Cockpit home screen summarizing on-track status",
@@ -732,6 +730,7 @@ export const caseStudies: CaseStudy[] = [
             height: 900,
           },
           hiFiSrc: "/Splash3.png",
+          hiFiAlt: "Onboarding screen introducing real-time navigation with a location pin icon",
           hiFiCaption:
             "Real-time navigation onboarding screen highlights the core value proposition with a location pin icon. The screen introduces key features—live updates and smart timing—helping first-time users understand how the app transforms airport navigation with AI-powered route optimization.",
         },
@@ -747,6 +746,7 @@ export const caseStudies: CaseStudy[] = [
             height: 900,
           },
           hiFiSrc: "/Splash1.png",
+          hiFiAlt: "AI assistance splash screen with Smart Routes, Crowd Alerts, and Security Estimates feature cards",
           hiFiCaption:
             "AI-powered assistance splash screen showcases intelligent features with a sparkle icon. Three feature cards—Smart Routes, Crowd Alerts, and Security Estimates—demonstrate how AI personalizes the experience by finding optimal paths, avoiding crowds, and providing wait time predictions before arrival.",
         },
@@ -762,6 +762,7 @@ export const caseStudies: CaseStudy[] = [
             height: 900,
           },
           hiFiSrc: "/LoadingScreen.png",
+          hiFiAlt: "Loading screen with a Loading Your Experience message and progress indicator",
           hiFiCaption:
             "Loading screen maintains user engagement during app initialization. The personalized messaging ('Loading Your Experience') and animated progress indicators reassure users that their customized feed is being prepared, reducing perceived wait time and setting expectations for personalized content.",
         },
@@ -769,7 +770,7 @@ export const caseStudies: CaseStudy[] = [
           id: "rtl-progressive-disclosure",
           category: "Low-Fi",
           caption:
-            "Progressive disclosure in action: summary view prevents information overload, but users can tap to understand the math. A/B testing shows users fell more confident when they could see the reasoning (4.6/5) vs. bare commands (3.2/5).",
+            "Progressive disclosure in action: summary view prevents information overload, but users can tap to understand the math. A/B testing shows users felt more confident when they could see the reasoning (4.6/5) vs. bare commands (3.2/5).",
           image: {
             src: createPlaceholderImage("Calculation Breakdown"),
             alt: "Progressive disclosure showing calculation breakdown for timing",
@@ -777,6 +778,7 @@ export const caseStudies: CaseStudy[] = [
             height: 900,
           },
           hiFiSrc: "/RTLlogin.png",
+          hiFiAlt: "Sign-in screen with email and password fields and Sign In and Create Account tabs",
           hiFiCaption:
             "Sign-in screen provides a streamlined authentication experience with email and password fields. The toggle between 'Sign In' and 'Create Account' tabs, along with staff mode options and password recovery links, ensures quick access for both travelers and airport personnel. The gradient-branded design maintains visual consistency with the onboarding flow.",
         },
@@ -792,6 +794,7 @@ export const caseStudies: CaseStudy[] = [
             height: 900,
           },
           hiFiSrc: "/FlightModal.png",
+          hiFiAlt: "Flight Information modal for entering a flight number or confirmation code",
           hiFiCaption:
             "Flight Information modal unlocks terminal-specific features by collecting flight details. The modal supports both flight number and confirmation code entry, with clear instructions and examples. The warning about airport locking ensures users understand that flight entry enables precise, location-aware updates and prevents accidental airport switching mid-journey.",
         },
@@ -807,6 +810,7 @@ export const caseStudies: CaseStudy[] = [
             height: 900,
           },
           hiFiSrc: "/AIModal.png",
+          hiFiAlt: "AI Summary modal showing Terminal B wait times, crowded areas, trending topics, and staff reports",
           hiFiCaption:
             "AI Summary modal surfaces real-time insights aggregated from Terminal B traveler reports. The summary presents key metrics—TSA wait times, crowded areas, trending topics, and verified staff reports—in a scannable format. This on-demand intelligence helps users make informed decisions about where to go, what to avoid, and when to move, all contextualized to their current terminal.",
         },
@@ -815,19 +819,19 @@ export const caseStudies: CaseStudy[] = [
     results: {
       metrics: [
         {
-          value: "92%",
-          label: "Users felt calmer pre-boarding",
-          description: "Surveyed after a 2-week pilot across 3 airports.",
+          value: "<10s",
+          label: "Time to answer \"Am I on track?\"",
+          description: "Early usability testing with hi-fi prototypes.",
         },
         {
-          value: "18%",
-          label: "Increase in on-time gate arrival",
-          description: "Measured via voluntary location pings and boarding scans.",
+          value: "3.8→4.6",
+          label: "Confidence in crowdsourced data",
+          description: "Out of 5, after introducing transparency features.",
         },
         {
-          value: "4.7/5",
-          label: "Usability score",
-          description: "Post-session SUS score from 24 participants.",
+          value: "89%",
+          label: "Navigated successfully offline",
+          description: "Early testing with no connectivity.",
         },
       ],
     },

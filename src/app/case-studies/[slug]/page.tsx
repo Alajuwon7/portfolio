@@ -58,7 +58,7 @@ export default async function CaseStudyPage(props: CaseStudyPageProps) {
 
   const heroMeta = [
     { label: "Project Type", value: study.hero.projectType },
-    { label: "Version", value: study.hero.duration },
+    { label: study.hero.durationLabel ?? "Duration", value: study.hero.duration },
     { label: "Role", value: study.hero.role },
     ...(study.hero.platform ? [{ label: "Platform", value: study.hero.platform }] : []),
   ];
@@ -181,7 +181,7 @@ export default async function CaseStudyPage(props: CaseStudyPageProps) {
           solution: "Single dashboard with real-time metrics + funnel",
         },
         {
-          problem: "Briefing leadership took 11+ minutes of prep",
+          problem: "Briefing leadership took 45+ minutes of prep",
           solution: "Click-to-drill metrics with trend indicators",
         },
       ];
@@ -198,7 +198,7 @@ export default async function CaseStudyPage(props: CaseStudyPageProps) {
 
         {isCDCCaseStudy && (
           <div className={styles.caseDisclaimer}>
-            This case study reflects work completed as a employee for CTE Inc. Under contract for the Centers for Disease Control and Prevention (CDC) - NVSS/NCHS Division. Due to strict affidavit and NDA requirements, some artifacts and sensitive details have been omitted from this case study.
+            This case study reflects work completed as an employee for CTE Inc. under contract for the Centers for Disease Control and Prevention (CDC) - NVSS/NCHS Division. Due to strict affidavit and NDA requirements, some artifacts and sensitive details have been omitted from this case study.
           </div>
         )}
 
@@ -424,12 +424,12 @@ export default async function CaseStudyPage(props: CaseStudyPageProps) {
               <h2>Rush The Line Timeline</h2>
             </div>
             <a
-              href="https://rushtheline.com"
+              href="https://apps.apple.com/us/app/rtl/id6758015887"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.joinBetaButton}
             >
-              Join Waitlist
+              Download the App
             </a>
           </div>
 
@@ -447,34 +447,6 @@ export default async function CaseStudyPage(props: CaseStudyPageProps) {
                 title: "Travel Feed",
                 description: "",
                 status: "completed",
-                icon: "check",
-              },
-              {
-                date: "APR 2026",
-                title: "",
-                description: "",
-                status: "future",
-                icon: "check",
-              },
-              {
-                date: "JUN 2026",
-                title: "",
-                description: "",
-                status: "future",
-                icon: "check",
-              },
-              {
-                date: "AUG 2026",
-                title: "",
-                description: "",
-                status: "future",
-                icon: "check",
-              },
-              {
-                date: "NOV 2026",
-                title: "",
-                description: "",
-                status: "future",
                 icon: "check",
               },
             ]}

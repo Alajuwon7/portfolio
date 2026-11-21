@@ -251,7 +251,7 @@ export default function Home() {
               Product Designer
             </h1>
             <p className={styles.heroDescription}>
-              With 6+ years of crafting digital experiences, I turn ambiguous problems into shipped solutions with measurable impact.
+              With 9 years of crafting digital experiences, I turn ambiguous problems into shipped solutions with measurable impact.
             </p>
             <div className={styles.heroSkills}>
               <div className={styles.heroSkillsHeader}>
@@ -283,7 +283,7 @@ export default function Home() {
             <div className={styles.heroImageFrame}>
               <Image
                 src={heroScreen}
-                alt="Case study preview"
+                alt="Portrait of Alajuwon Thomas"
                 className={styles.heroScreen}
                 loading="lazy"
                 width={280}
@@ -418,7 +418,7 @@ export default function Home() {
           <div className={styles.aboutImage}>
             <Image
               src={aboutPortrait}
-              alt="About portrait"
+              alt="Portrait of Alajuwon Thomas"
               loading="lazy"
               width={620}
               height={520}
