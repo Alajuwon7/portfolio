@@ -74,13 +74,6 @@ const portfolioProjects = [
     slug: "rush-the-line",
     image: "https://res.cloudinary.com/kingaat7/image/upload/v1768836312/1_yzbrhu.png",
   },
-  {
-    title: "True Peaks: Modern Online Booking Platform",
-    summary:
-      "A gamified mobile companion that reduces line anxiety with delightful UI.",
-    slug: "true-peaks",
-    image: "https://res.cloudinary.com/kingaat7/image/upload/v1768836312/3_bztbnw.png",
-  },
 ];
 
 const serviceHighlights: ServiceHighlight[] = [
